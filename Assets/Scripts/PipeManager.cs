@@ -1,0 +1,97 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+
+public class PipeManager : MonoBehaviour
+{
+ 
+  [SerializeField]
+  private PipeScript pipePrefab_ = null;
+  [SerializeField]
+  private int numRows_ = 4;
+  [SerializeField]
+  private int numCols_ = 10;
+  [SerializeField]
+  private float gapX_ = 0.10f;
+  [SerializeField]
+  private float gapY_ = 0.10f;
+
+  private GameObject ship_;
+
+  [NonSerialized]
+  private List<PipeScript> pipes_ = new List<PipeScript>();
+
+  char[] keyMapping = {
+    '1','2','3','4','5','6','7','8','9','0',
+      'q','w','e','r','t','y','u','i','o','p',
+      'a','s','d','f','g','h','j','k','l','ñ',
+        'z','x','c','v','b','n','m',',','.','-'
+  };
+
+  private Dictionary<char, int> charDictionary = new Dictionary<char, int>();
+
+  private void GeneratePipes(ref Transform spawnPointPipes)
+  {
+    int nTotalPipes = numCols_ * numRows_;
+
+    Renderer renderer = pipePrefab_.transform.GetChild(0).GetComponent<Renderer>();
+    float pipeSize = renderer.bounds.size.x;
+
+    Vector3 starterPos = spawnPointPipes ? spawnPointPipes.position : Vector3.zero;
+
+    float offsetRow = 0.0f;
+
+    for (int y = 0; y < numRows_; ++y)
+    {
+      for (int x = 0; x < numCols_; ++x)
+      {
+        Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
+        PipeScript tmpPipe;
+
+        tmpPipe = Instantiate(pipePrefab_, position, new Quaternion(), ship_ ?  ship_.transform : null );
+        tmpPipe.transform.position = (new Vector3(starterPos.x + offsetRow, starterPos.y)) + new Vector3((pipeSize + gapX_) * x, -(pipeSize + gapY_) * y);
+
+        pipes_.Add(tmpPipe);
+      }
+      if (y % 2 == 0)
+      {
+        offsetRow += 0.7f;
+      }
+    }
+    
+  }
+
+  private void SearchForShip()
+  {
+    ship_ = GameObject.Find("Ship");
+  }
+
+  private void InitKeyMapping()
+  {
+    int counter = 0;
+    foreach(char c in keyMapping)
+    {
+      charDictionary.Add(c, counter++);
+    }
+  }
+  public void Init(ref Transform spawnPointPipes)
+  {
+    InitKeyMapping();
+    SearchForShip();
+    GeneratePipes(ref spawnPointPipes);
+  }
+
+  public void DetectInput()
+  {
+
+    foreach(char c in Input.inputString)
+    {
+      if (charDictionary.ContainsKey(c))
+      {
+        pipes_[charDictionary[c]].ChangeStatePipe();
+      } 
+    }
+  }
+}
