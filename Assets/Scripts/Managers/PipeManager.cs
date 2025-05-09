@@ -45,6 +45,8 @@ public class PipeManager : MonoBehaviour
 
     for (int y = 0; y < numRows_; ++y)
     {
+      SpriteRenderer customRendererRow = pipePrefab_.GetComponent<SpriteRenderer>();
+
       for (int x = 0; x < numCols_; ++x)
       {
         Vector3 position = new Vector3(0.0f, 0.0f, 0.0f);
@@ -52,6 +54,14 @@ public class PipeManager : MonoBehaviour
 
         tmpPipe = Instantiate(pipePrefab_, position, new Quaternion(), ship_ ?  ship_.transform : null );
         tmpPipe.transform.position = (new Vector3(starterPos.x + offsetRow, starterPos.y)) + new Vector3((pipeSize + gapX_) * x, -(pipeSize + gapY_) * y);
+
+        SpriteRenderer srTmpPipe = tmpPipe.GetComponentInChildren<SpriteRenderer>();
+        SpriteMask spriteMaskPipe = tmpPipe.transform.GetChild(2).gameObject.GetComponent<SpriteMask>();
+
+        spriteMaskPipe.frontSortingLayerID =  SortingLayer.NameToID($"RocketRow{y + 1}");
+        spriteMaskPipe.backSortingLayerID = SortingLayer.NameToID($"RocketRow{y + 1}");
+        spriteMaskPipe.sortingOrder = 1 + y;
+        srTmpPipe.sortingOrder = 1 + y;
 
         pipes_.Add(tmpPipe);
       }
@@ -90,7 +100,7 @@ public class PipeManager : MonoBehaviour
     {
       if (charDictionary.ContainsKey(c))
       {
-        pipes_[charDictionary[c]].ChangeStatePipe();
+        pipes_[charDictionary[c]].OpenPipe();
       } 
     }
   }

@@ -4,37 +4,39 @@ using UnityEngine;
 
 public class PipeScript : MonoBehaviour
 {
-  public Sprite lid_open_, lid_closed_;
-  private int is_lid_open_;
-  private bool isLidOpen_;
+  public Sprite lidOpen_, lidClosed_;
+  private bool isLidOpen_ = false;
+  [SerializeField]
+  private float timeOpen_ = 0.8f;
+  private float timeCounter = -1.0f;
     
-  public void ChangeStatePipe()
+  public void OpenPipe()
   {
-    if(isLidOpen_)
+    if(!isLidOpen_)
     {
-      GetComponentInChildren<SpriteRenderer>().sprite = lid_closed_;
-      isLidOpen_ = false;
-    }
-    else
-    {
-      GetComponentInChildren<SpriteRenderer>().sprite = lid_open_;
+      GetComponentInChildren<SpriteRenderer>().sprite = lidOpen_;
       isLidOpen_ = true;
+      timeCounter = 0.0f;
     }
   }
-  
-  void Start()
+
+  private void CountForClosePipe()
   {
-    is_lid_open_ = Random.Range(0, 5);
-    if (is_lid_open_ == 0)
-      isLidOpen_ = true;
-    else
+    timeCounter += Time.deltaTime;
+    if(timeCounter >= timeOpen_)
+    {
+      GetComponentInChildren<SpriteRenderer>().sprite = lidClosed_;
       isLidOpen_ = false;
-    ChangeStatePipe();
+      timeCounter = -1.0f;
+    }
   }
 
   // Update is called once per frame
   void Update()
   {
-        
+    if(timeCounter >= 0.0f)
+    {
+      CountForClosePipe();
+    }
   }
 }

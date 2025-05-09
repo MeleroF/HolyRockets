@@ -47,3 +47,15 @@ TagManager:
   - name: Mountains
     uniqueID: 3230499607
     locked: 0
+  - name: RocketRow1
+    uniqueID: 4220417339
+    locked: 0
+  - name: RocketRow2
+    uniqueID: 2249611383
+    locked: 0
+  - name: RocketRow3
+    uniqueID: 152343923
+    locked: 0
+  - name: RocketRow4
+    uniqueID: 1248488179
+    locked: 0
