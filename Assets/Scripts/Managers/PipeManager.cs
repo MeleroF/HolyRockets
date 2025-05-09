@@ -6,13 +6,13 @@ using UnityEngine;
 
 public class PipeManager : MonoBehaviour
 {
- 
+
   [SerializeField]
   private PipeScript pipePrefab_ = null;
   [SerializeField]
-  private int numRows_ = 4;
+  public int numRows_ = 4 ;
   [SerializeField]
-  private int numCols_ = 10;
+  public int numCols_ = 10;
   [SerializeField]
   private float gapX_ = 0.10f;
   [SerializeField]
@@ -21,7 +21,7 @@ public class PipeManager : MonoBehaviour
   private GameObject ship_;
 
   [NonSerialized]
-  private List<PipeScript> pipes_ = new List<PipeScript>();
+  public List<PipeScript> pipes_ = new List<PipeScript>();
 
   char[] keyMapping = {
     '1','2','3','4','5','6','7','8','9','0',
@@ -58,8 +58,11 @@ public class PipeManager : MonoBehaviour
         SpriteRenderer srTmpPipe = tmpPipe.GetComponentInChildren<SpriteRenderer>();
         SpriteMask spriteMaskPipe = tmpPipe.transform.GetChild(2).gameObject.GetComponent<SpriteMask>();
 
-        spriteMaskPipe.frontSortingLayerID =  SortingLayer.NameToID($"RocketRow{y + 1}");
+
         spriteMaskPipe.backSortingLayerID = SortingLayer.NameToID($"RocketRow{y + 1}");
+        spriteMaskPipe.frontSortingLayerID = SortingLayer.NameToID($"RocketRow{y + 2}");
+        
+        
         spriteMaskPipe.sortingOrder = 1 + y;
         srTmpPipe.sortingOrder = 1 + y;
 

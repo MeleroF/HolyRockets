@@ -32,15 +32,17 @@ public class MissileManager : MonoBehaviour
     GenerateMissiles();
   }
 
-  public void SpawnMissiles()
+  public void SpawnMissiles(ref List<PipeScript> pipes, ref int numRows, ref int numCols)
   {
     bool missileAlreaySpawned = false;
     for(int i = 0; i < missiles.Count && !missileAlreaySpawned; ++i)
     {
-      int randRow = UnityEngine.Random.Range(1, 5);
+      int randRow = UnityEngine.Random.Range(0, numRows);
+      int randCol = UnityEngine.Random.Range(0, numCols);
+
       if (!missiles[i].activated_)
       {
-        missiles[i].Spawn(randRow);
+        missiles[i].Spawn(randRow + 1, pipes[randRow * numCols + randCol].transform.position); 
         missileAlreaySpawned = true;
       }
     }

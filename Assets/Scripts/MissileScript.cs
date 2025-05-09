@@ -38,13 +38,13 @@ public class MissileScript : MonoBehaviour
   }
 
   // Update is called once per frame
-  public void Spawn(int assignedRow)
+  public void Spawn(int assignedRow, Vector3 pos)
   {
     gameObject.SetActive(true);
     activated_ = true;
     sr.sortingLayerName = $"RocketRow{assignedRow}";
     sr.sortingOrder = assignedRow + 1; 
-    transform.position = new Vector3(UnityEngine.Random.Range(initialSpawnPosX, screenWidth),spawnPosY);
+    transform.position = new Vector3(pos.x, spawnPosY);
   }
 
   private void LetFallMissile()

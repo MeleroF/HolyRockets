@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
   private IEnumerator SetTimeForMissile()
   {
     yield return new WaitForSeconds(missileManager_.timeBetweenSpawns_);
-    missileManager_.SpawnMissiles();
+    missileManager_.SpawnMissiles(ref pipeManager_.pipes_, ref pipeManager_.numRows_, ref pipeManager_.numCols_);
     StartCoroutine(SetTimeForMissile());
   }
 
