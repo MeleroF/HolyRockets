@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UpcomingRocketManager;
 using static MissileDestroy;
+using static PipeScript;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,14 +40,15 @@ public class GameManager : MonoBehaviour
     SummonRocketsInLevel();
 
     OnAllRocketsDestroid += CanSpawnMissiles;
+    OnRocketCollision += CountMissilesCatched;
     OnMissileCatch += CountMissilesCatched;
 
   }
 
   private void SummonRocketsInLevel()
   {
-    int randNumMissiles = UnityEngine.Random.Range(1, maxMissilesWave_);
-    upcomingRocketManager_.SummonRockets(randNumMissiles);
+    missilesWave_ = UnityEngine.Random.Range(1, maxMissilesWave_);
+    upcomingRocketManager_.SummonRockets(missilesWave_);
   }
 
   private void UpdateSettingsForLevel()
