@@ -37,7 +37,7 @@ public class MissileManager : MonoBehaviour
     int nmissileSpawned = 0;
     for(int i = 0; i < missiles.Count && nmissileSpawned < numMissilesWave; ++i)
     {
-      if (!missiles[i].gameObject.activeSelf)
+      if (!missiles[i].controller_.isEnabled_)
       {
         missiles[i].crosshair_.StartSearching(ref pipes, 4, 5.0f);
         nmissileSpawned++;

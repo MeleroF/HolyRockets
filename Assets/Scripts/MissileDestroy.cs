@@ -22,12 +22,13 @@ public class MissileDestroy : MonoBehaviour
     if (collision.gameObject.layer == rocketLayer_)
     {
       SpriteRenderer sr = collision.gameObject.GetComponent<SpriteRenderer>();
+      ParentController controller = collision.gameObject.GetComponent<ParentController>();
 
       if (sr.sortingLayerID != sm_.backSortingLayerID) return;
 
       OnMissileCatch?.Invoke();
 
-      collision.gameObject.SetActive(false);
+      controller.ChangeParentState(false);
     }
   }
  

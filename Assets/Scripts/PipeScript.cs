@@ -18,7 +18,6 @@ public class PipeScript : MonoBehaviour
   private int rocketLayer_ = 0;
 
   private float timeOpen_ = 0.8f;
-  private float timeCounter = -1.0f;
 
   public void OpenPipe()
   {
@@ -26,21 +25,19 @@ public class PipeScript : MonoBehaviour
     {
       sr_.sprite = lidOpen_;
       isLidOpen_ = true;
-      timeCounter = 0.0f;
       collider_.enabled = false;
+      StartCoroutine(CountForClosePipe());
     }
   }
 
-  private void CountForClosePipe()
+  private IEnumerator CountForClosePipe()
   {
-    timeCounter += Time.deltaTime;
-    if(timeCounter >= timeOpen_)
-    {
-      sr_.sprite = lidClosed_;
-      isLidOpen_ = false;
-      timeCounter = -1.0f;
-      collider_.enabled = true;
-    }
+    yield return new WaitForSeconds(timeOpen_);
+
+    sr_.sprite = lidClosed_;
+    isLidOpen_ = false;
+    collider_.enabled = true;
+   
   }
 
   private void Start()
@@ -50,24 +47,17 @@ public class PipeScript : MonoBehaviour
     rocketLayer_ = LayerMask.NameToLayer("Rocket");
   }
 
-  // Update is called once per frame
-  void Update()
-  {
-    if(timeCounter >= 0.0f)
-    {
-      CountForClosePipe();
-    }
-  }
+
   private void OnTriggerEnter2D(Collider2D collision)
   {
     if (collision.gameObject.layer == rocketLayer_)
     {
       SpriteRenderer sr = collision.gameObject.GetComponent<SpriteRenderer>();
-
+      ParentController controller = collision.gameObject.GetComponent<ParentController>();
       if (sr.sortingLayerID != sr_.sortingLayerID) return;
 
       OnRocketCollision?.Invoke();
-      collision.gameObject.SetActive(false);
+      controller.ChangeParentState(false);
     }
   }
 

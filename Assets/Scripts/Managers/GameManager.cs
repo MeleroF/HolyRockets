@@ -59,21 +59,17 @@ public class GameManager : MonoBehaviour
 
   private void CountMissilesCatched()
   {
+    missileCounter_++;
     if (missileCounter_ >= missilesWave_)
     {
       SummonRocketsInLevel();
       missileCounter_ = 0;
-      if(waveCounter_ >= numWaves_)
+      waveCounter_++;
+      if (waveCounter_ >= numWaves_)
       {
         UpdateSettingsForLevel();
         waveCounter_ = 0;
       }
-      else
-        waveCounter_++;
-    }
-    else
-    {
-      missileCounter_++;
     }
 
   }

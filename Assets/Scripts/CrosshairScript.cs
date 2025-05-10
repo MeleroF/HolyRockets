@@ -22,6 +22,7 @@ public class CrosshairScript : MonoBehaviour
   private int numPaths_ = 0;
   private int pathCount_ = 0;
   private int rowTarget_ = 0;
+  private int indextargetPipe_ = 0;
 
   private SpriteRenderer sr_;
   private bool isSearching_ = false;
@@ -31,11 +32,12 @@ public class CrosshairScript : MonoBehaviour
   private List<PipeScript> pipes_ = null;
   private Transform targetTr_ = null;
 
-  private void Start()
+  public void Init()
   {
     gameObject.SetActive(false);
     sr_ = GetComponent<SpriteRenderer>();
-    parentReference_ = GetComponentInParent<MissileScript>();
+    GameObject parent = gameObject.transform.parent.gameObject;
+    parentReference_ = parent.GetComponent<MissileScript>();
   }
 
   public void StartSearching(ref List<PipeScript> pipes, int numPaths, float blinkDuration)
@@ -48,6 +50,7 @@ public class CrosshairScript : MonoBehaviour
     transform.position = pipes_[randPipe].gameObject.transform.position;
     blinkDuration_ = blinkDuration;
     numPaths_ = numPaths;
+    gameObject.SetActive(true);
     sr_.sprite = crosshairSearching_;
     isSearching_ = true;
   }
@@ -61,25 +64,22 @@ public class CrosshairScript : MonoBehaviour
 
   private void AvanceToTarget()
   {
-    Vector3 dir = transform.position - targetTr_.position;
+    Vector3 dir = pipes_[indextargetPipe_].gameObject.transform.position - transform.position;
 
-    if(dir.magnitude < 1.0f)
+    if(dir.magnitude > 0.06f)
     {
       dir.Normalize();
       transform.position += dir * Time.deltaTime * speed_;
     }else
     {
       targetTr_ = null;
-      if(pathCount_ >= numPaths_)
+      pathCount_++;
+      if (pathCount_ >= numPaths_)
       {
         isSearching_ = false;
         StartCoroutine(Blink());
         StartCoroutine(CountForLaunchMissile());
         pathCount_ = 0;
-      }
-      else
-      {
-        pathCount_++;
       }
       
     }
@@ -89,9 +89,9 @@ public class CrosshairScript : MonoBehaviour
   {
     if(targetTr_ == null)
     {
-      int randPipe = UnityEngine.Random.Range(0, pipes_.Count);
-      targetTr_ = pipes_[randPipe].gameObject.transform;
-      rowTarget_ = pipes_[randPipe].sr_.sortingOrder - 1;
+      indextargetPipe_ = UnityEngine.Random.Range(0, pipes_.Count);
+      targetTr_ = pipes_[indextargetPipe_].gameObject.transform;
+      rowTarget_ = pipes_[indextargetPipe_].sr_.sortingOrder;
     }
     else
     {
@@ -119,6 +119,8 @@ public class CrosshairScript : MonoBehaviour
 
   private void Update()
   {
+    if(gameObject.activeSelf) 
+      Debug.Log("Crosshair actived");
     if(isSearching_)
     {
       SearchTarget();

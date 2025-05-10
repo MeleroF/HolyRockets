@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8138997805039031205}
   - component: {fileID: 2036836128029183374}
+  - component: {fileID: 8939234317094309240}
   m_Layer: 0
   m_Name: Crosshair
   m_TagString: Untagged
@@ -70,9 +71,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 192364705
+  m_SortingLayer: 7
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: d3ed7de5ef9246e4a8afc0e7d9d17fef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -84,6 +85,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8939234317094309240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4409174216677404105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d977b3b1e070124a8b5dc1767e2e1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  crosshairSearching_: {fileID: 21300000, guid: d3ed7de5ef9246e4a8afc0e7d9d17fef, type: 3}
+  crosshairPointing_: {fileID: 21300000, guid: b477c42719db22b43b97931410c2b492, type: 3}
+  crosshairBlink_: {fileID: 21300000, guid: 63bf50b04e35d0b4785bd82b26b5ad9f, type: 3}
+  speed_: 2
 --- !u!1 &8984212838003453078
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,6 +114,7 @@ GameObject:
   - component: {fileID: 3547238030306724817}
   - component: {fileID: -6172338709639839507}
   - component: {fileID: 2707038114109581767}
+  - component: {fileID: 2641320618746662416}
   m_Layer: 3
   m_Name: Missile
   m_TagString: Untagged
@@ -257,3 +275,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2641320618746662416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8984212838003453078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1b31f2ad78b27f438092613033a6cda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

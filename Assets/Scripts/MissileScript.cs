@@ -16,6 +16,8 @@ public class MissileScript : MonoBehaviour
   private SpriteRenderer sr;
   [NonSerialized]
   public CrosshairScript crosshair_;
+  [NonSerialized]
+  public ParentController controller_;
 
   private void GetSpawnPointY()
   {
@@ -33,16 +35,18 @@ public class MissileScript : MonoBehaviour
   {
     GetSpawnPointY();
     sr = GetComponent<SpriteRenderer>();
-    gameObject.SetActive(false);
+    controller_ = GetComponent<ParentController>();
+    controller_.Start();
+    controller_.ChangeParentState(false);
     crosshair_ = GetComponentInChildren<CrosshairScript>();
-
+    crosshair_.Init();
 
   }
 
   // Update is called once per frame
   public void Spawn(int assignedRow, Vector3 pos)
   {
-    gameObject.SetActive(true);
+    controller_.ChangeParentState(true);
     sr.sortingLayerName = $"RocketRow{assignedRow}";
     sr.sortingOrder = assignedRow + 1; 
     transform.position = new Vector3(pos.x, spawnPosY);

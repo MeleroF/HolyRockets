@@ -37,13 +37,11 @@ public class UpcomingRocketManager : MonoBehaviour
 
   private void DetectRocketsDestroid()
   {
+    rocketsDestroid++;
     if (rocketsDestroid >= numRocketsToSpawn_)
     {
       OnAllRocketsDestroid?.Invoke(numRocketsToSpawn_);
       rocketsDestroid = 0;
-    }else
-    {
-      rocketsDestroid++;
     }
   }
 
@@ -53,7 +51,7 @@ public class UpcomingRocketManager : MonoBehaviour
     int randRocket = 0;
     int whileLoopLimitCounter = 0;
     int maxWhileLoops = numMaxRockets_ * 3;
-
+    numRocketsToSpawn_ = numRockets;
     while (nrocketSpawned < numRockets && whileLoopLimitCounter < maxWhileLoops) { 
       randRocket = UnityEngine.Random.Range(0, numMaxRockets_);
       if (!rocketList_[randRocket].gameObject.activeSelf)
