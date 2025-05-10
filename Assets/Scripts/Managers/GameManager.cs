@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static UpcomingRocketManager;
+using static MissileDestroy;
 
 public class GameManager : MonoBehaviour
 {
+  [SerializeField]
+  private LevelManager levelManager_;
   [SerializeField]
   private UpcomingRocketManager upcomingRocketManager_;
   [SerializeField]
@@ -17,27 +20,67 @@ public class GameManager : MonoBehaviour
   [SerializeField]
   private Transform upcomingRocketSpawnPoint_;
 
+  private int maxMissilesWave_ = 0;
+  private int missilesWave_ = 0;
+  private int missileCounter_ = 0;
+
+  private int numWaves_ = 0;
+  private int waveCounter_ = 0;
+  private int currentLevel_ = 0;
+
   // Start is called before the first frame update
   void Start()
   {
     pipeManager_?.Init(ref pipeSpawnPoint_);
     missileManager_?.Init();
-    upcomingRocketManager_?.Init(ref upcomingRocketSpawnPoint_);
+    upcomingRocketManager_?.Init(ref upcomingRocketSpawnPoint_, missileManager_.numMaxMissiles_);
+
+    UpdateSettingsForLevel();
+    SummonRocketsInLevel();
 
     OnAllRocketsDestroid += CanSpawnMissiles;
+    OnMissileCatch += CountMissilesCatched;
 
   }
 
-  private IEnumerator SetTimeForMissile()
+  private void SummonRocketsInLevel()
   {
-    yield return new WaitForSeconds(missileManager_.timeBetweenSpawns_);
-    missileManager_.SpawnMissiles(ref pipeManager_.pipes_, ref pipeManager_.numRows_, ref pipeManager_.numCols_);
-    StartCoroutine(SetTimeForMissile());
+    int randNumMissiles = UnityEngine.Random.Range(1, maxMissilesWave_);
+    upcomingRocketManager_.SummonRockets(randNumMissiles);
   }
 
-  private void CanSpawnMissiles()
+  private void UpdateSettingsForLevel()
   {
-    StartCoroutine(SetTimeForMissile());
+    currentLevel_++;
+    float difficulty = Mathf.Log(currentLevel_, 2) + 1.0f;
+    maxMissilesWave_ = Mathf.CeilToInt(difficulty * 1.5f);
+    numWaves_ = Mathf.CeilToInt(difficulty);
+  }
+
+  private void CountMissilesCatched()
+  {
+    if (missileCounter_ >= missilesWave_)
+    {
+      SummonRocketsInLevel();
+      missileCounter_ = 0;
+      if(waveCounter_ >= numWaves_)
+      {
+        UpdateSettingsForLevel();
+        waveCounter_ = 0;
+      }
+      else
+        waveCounter_++;
+    }
+    else
+    {
+      missileCounter_++;
+    }
+
+  }
+
+  private void CanSpawnMissiles(int numMissiles)
+  {
+    missileManager_.SpawnMissiles(numMissiles, ref pipeManager_.pipes_);
   }
 
   // Update is called once per frame

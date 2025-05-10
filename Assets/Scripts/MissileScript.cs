@@ -14,6 +14,8 @@ public class MissileScript : MonoBehaviour
   private float screenWidth = 0.0f;
 
   private SpriteRenderer sr;
+  [NonSerialized]
+  public CrosshairScript crosshair_;
 
   private void GetSpawnPointY()
   {
@@ -32,7 +34,9 @@ public class MissileScript : MonoBehaviour
     GetSpawnPointY();
     sr = GetComponent<SpriteRenderer>();
     gameObject.SetActive(false);
-    
+    crosshair_ = GetComponentInChildren<CrosshairScript>();
+
+
   }
 
   // Update is called once per frame

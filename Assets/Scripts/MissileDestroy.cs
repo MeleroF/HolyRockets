@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MissileDestroy : MonoBehaviour
 {
+  public delegate void MissileCatched();
+  public static event MissileCatched OnMissileCatch;
+
   private int rocketLayer_ = 0;
   private SpriteMask sm_;
 
@@ -22,6 +25,7 @@ public class MissileDestroy : MonoBehaviour
 
       if (sr.sortingLayerID != sm_.backSortingLayerID) return;
 
+      OnMissileCatch?.Invoke();
 
       collision.gameObject.SetActive(false);
     }

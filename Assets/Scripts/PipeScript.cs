@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,9 @@ public class PipeScript : MonoBehaviour
 
   public Sprite lidOpen_, lidClosed_;
   private bool isLidOpen_ = false;
-  [SerializeField]
 
-  private SpriteRenderer sr_;
+  [NonSerialized]
+  public SpriteRenderer sr_;
   private BoxCollider2D collider_;
 
   private int rocketLayer_ = 0;

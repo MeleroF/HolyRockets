@@ -37,8 +37,8 @@ public class UpcomingRocketScript : MonoBehaviour
   public void Init(Vector3 position)
   {
     ApplyDepth();
+    gameObject.SetActive(false);
     spawnPos_ = position;
-    Spawn();
   }
 
   public void Spawn()

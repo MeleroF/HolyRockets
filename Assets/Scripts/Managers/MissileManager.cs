@@ -8,8 +8,8 @@ public class MissileManager : MonoBehaviour
 {
   [SerializeField]
   private MissileScript missilePrefab_;
-  [SerializeField]
-  private int numMaxMissiles_ = 10;
+  
+  public int numMaxMissiles_ = 15;
 
   [NonSerialized]
   public float timeBetweenSpawns_ = 4.0f;
@@ -32,18 +32,15 @@ public class MissileManager : MonoBehaviour
     GenerateMissiles();
   }
 
-  public void SpawnMissiles(ref List<PipeScript> pipes, ref int numRows, ref int numCols)
+  public void SpawnMissiles(int numMissilesWave, ref List<PipeScript> pipes)
   {
-    bool missileAlreaySpawned = false;
-    for(int i = 0; i < missiles.Count && !missileAlreaySpawned; ++i)
+    int nmissileSpawned = 0;
+    for(int i = 0; i < missiles.Count && nmissileSpawned < numMissilesWave; ++i)
     {
-      int randRow = UnityEngine.Random.Range(0, numRows);
-      int randCol = UnityEngine.Random.Range(0, numCols);
-
       if (!missiles[i].gameObject.activeSelf)
       {
-        missiles[i].Spawn(randRow + 1, pipes[randRow * numCols + randCol].transform.position); 
-        missileAlreaySpawned = true;
+        missiles[i].crosshair_.StartSearching(ref pipes, 4, 5.0f);
+        nmissileSpawned++;
       }
     }
   }
