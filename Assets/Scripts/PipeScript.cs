@@ -4,19 +4,29 @@ using UnityEngine;
 
 public class PipeScript : MonoBehaviour
 {
+  public delegate void RocketCollisioned();
+  public static event RocketCollisioned OnRocketCollision;
+
   public Sprite lidOpen_, lidClosed_;
   private bool isLidOpen_ = false;
   [SerializeField]
+
+  private SpriteRenderer sr_;
+  private BoxCollider2D collider_;
+
+  private int rocketLayer_ = 0;
+
   private float timeOpen_ = 0.8f;
   private float timeCounter = -1.0f;
-    
+
   public void OpenPipe()
   {
     if(!isLidOpen_)
     {
-      GetComponentInChildren<SpriteRenderer>().sprite = lidOpen_;
+      sr_.sprite = lidOpen_;
       isLidOpen_ = true;
       timeCounter = 0.0f;
+      collider_.enabled = false;
     }
   }
 
@@ -25,10 +35,18 @@ public class PipeScript : MonoBehaviour
     timeCounter += Time.deltaTime;
     if(timeCounter >= timeOpen_)
     {
-      GetComponentInChildren<SpriteRenderer>().sprite = lidClosed_;
+      sr_.sprite = lidClosed_;
       isLidOpen_ = false;
       timeCounter = -1.0f;
+      collider_.enabled = true;
     }
+  }
+
+  private void Start()
+  {
+    sr_ = GetComponentInChildren<SpriteRenderer>();
+    collider_ = GetComponent<BoxCollider2D>();
+    rocketLayer_ = LayerMask.NameToLayer("Rocket");
   }
 
   // Update is called once per frame
@@ -39,4 +57,17 @@ public class PipeScript : MonoBehaviour
       CountForClosePipe();
     }
   }
+  private void OnTriggerEnter2D(Collider2D collision)
+  {
+    if (collision.gameObject.layer == rocketLayer_)
+    {
+      SpriteRenderer sr = collision.gameObject.GetComponent<SpriteRenderer>();
+
+      if (sr.sortingLayerID != sr_.sortingLayerID) return;
+
+      OnRocketCollision?.Invoke();
+      collision.gameObject.SetActive(false);
+    }
+  }
+
 }

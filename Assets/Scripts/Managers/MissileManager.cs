@@ -40,7 +40,7 @@ public class MissileManager : MonoBehaviour
       int randRow = UnityEngine.Random.Range(0, numRows);
       int randCol = UnityEngine.Random.Range(0, numCols);
 
-      if (!missiles[i].activated_)
+      if (!missiles[i].gameObject.activeSelf)
       {
         missiles[i].Spawn(randRow + 1, pipes[randRow * numCols + randCol].transform.position); 
         missileAlreaySpawned = true;

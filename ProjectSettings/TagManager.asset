@@ -8,7 +8,7 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Rocket
   - Water
   - UI
   - 
@@ -58,4 +58,7 @@ TagManager:
     locked: 0
   - name: RocketRow4
     uniqueID: 1248488179
+    locked: 0
+  - name: RocketRow5
+    uniqueID: 192364705
     locked: 0

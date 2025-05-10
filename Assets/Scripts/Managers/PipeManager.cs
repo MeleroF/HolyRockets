@@ -58,11 +58,11 @@ public class PipeManager : MonoBehaviour
         SpriteRenderer srTmpPipe = tmpPipe.GetComponentInChildren<SpriteRenderer>();
         SpriteMask spriteMaskPipe = tmpPipe.transform.GetChild(2).gameObject.GetComponent<SpriteMask>();
 
-
-        spriteMaskPipe.backSortingLayerID = SortingLayer.NameToID($"RocketRow{y + 1}");
+        srTmpPipe.sortingLayerID = SortingLayer.NameToID($"RocketRow{y + 1}");
         spriteMaskPipe.frontSortingLayerID = SortingLayer.NameToID($"RocketRow{y + 2}");
-        
-        
+        spriteMaskPipe.backSortingLayerID = SortingLayer.NameToID($"RocketRow{y + 1}");
+
+
         spriteMaskPipe.sortingOrder = 1 + y;
         srTmpPipe.sortingOrder = 1 + y;
 
