@@ -9,10 +9,10 @@ public class MissileManager : MonoBehaviour
   [SerializeField]
   private MissileScript missilePrefab_;
   
+  public int maxPaths_ = 5;
   public int numMaxMissiles_ = 15;
 
-  [NonSerialized]
-  public float timeBetweenSpawns_ = 4.0f;
+
   [NonSerialized]
   private List<MissileScript> missiles = new List<MissileScript>();
 
@@ -32,14 +32,16 @@ public class MissileManager : MonoBehaviour
     GenerateMissiles();
   }
 
-  public void SpawnMissiles(int numMissilesWave, ref List<PipeScript> pipes)
+  public void SpawnMissiles(int numMissilesWave, ref List<PipeScript> pipes, int minPaths, int maxPaths, float maxSpeedFactor)
   {
     int nmissileSpawned = 0;
     for(int i = 0; i < missiles.Count && nmissileSpawned < numMissilesWave; ++i)
     {
       if (!missiles[i].controller_.isEnabled_)
       {
-        missiles[i].crosshair_.StartSearching(ref pipes, 4, 5.0f);
+        int numPaths = UnityEngine.Random.Range(minPaths, maxPaths);
+        float speedFactor = UnityEngine.Random.Range(1.0f, maxSpeedFactor);
+        missiles[i].crosshair_.StartSearching(ref pipes, numPaths, speedFactor);
         nmissileSpawned++;
       }
     }

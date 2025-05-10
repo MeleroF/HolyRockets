@@ -100,7 +100,9 @@ MonoBehaviour:
   crosshairSearching_: {fileID: 21300000, guid: d3ed7de5ef9246e4a8afc0e7d9d17fef, type: 3}
   crosshairPointing_: {fileID: 21300000, guid: b477c42719db22b43b97931410c2b492, type: 3}
   crosshairBlink_: {fileID: 21300000, guid: 63bf50b04e35d0b4785bd82b26b5ad9f, type: 3}
-  speed_: 2
+  searchSpeed_: 2
+  blinkLapseSpeed_: 0.2
+  blinkSpeed_: 0.1
 --- !u!1 &8984212838003453078
 GameObject:
   m_ObjectHideFlags: 0
@@ -202,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f91d6b8202a03549a5c5ea8b9ee38a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallSpeed_: -10
+  fallSpeed_: -13
 --- !u!61 &-6172338709639839507
 BoxCollider2D:
   m_ObjectHideFlags: 0

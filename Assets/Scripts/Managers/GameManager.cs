@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
   private int numWaves_ = 0;
   private int waveCounter_ = 0;
   private int currentLevel_ = 0;
+  private int minPathsCrosshair = 0;
+
+  private float maxSpeedFactor_ = 1.0f;
 
   // Start is called before the first frame update
   void Start()
@@ -57,6 +60,8 @@ public class GameManager : MonoBehaviour
     float difficulty = Mathf.Log(currentLevel_, 2) + 1.0f;
     maxMissilesWave_ = Mathf.CeilToInt(difficulty * 1.5f);
     numWaves_ = Mathf.CeilToInt(difficulty);
+    minPathsCrosshair = Mathf.Max(0, missileManager_.maxPaths_ - Mathf.FloorToInt(difficulty));
+    maxSpeedFactor_ = Mathf.Min(10, difficulty);
   }
 
   private void CountMissilesCatched()
@@ -78,7 +83,7 @@ public class GameManager : MonoBehaviour
 
   private void CanSpawnMissiles(int numMissiles)
   {
-    missileManager_.SpawnMissiles(numMissiles, ref pipeManager_.pipes_);
+    missileManager_.SpawnMissiles(numMissiles, ref pipeManager_.pipes_, minPathsCrosshair, missileManager_.maxPaths_, maxSpeedFactor_);
   }
 
   // Update is called once per frame

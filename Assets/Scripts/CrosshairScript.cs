@@ -12,10 +12,13 @@ public class CrosshairScript : MonoBehaviour
   [SerializeField]
   private Sprite crosshairBlink_;
   [SerializeField]
-  private float speed_ = 2.0f;
+  private float searchSpeed_ = 2.0f;
+  [SerializeField]
+  private float blinkLapseSpeed_ = 0.2f;
+  [SerializeField]
+  private float blinkSpeed_ = 0.1f;
 
-
-  private float blinkDuration_ = 2.0f;
+  private float blinkDuration_ = 3.0f;
   private float blinkLapse_ = 1.0f;
 
 
@@ -40,15 +43,17 @@ public class CrosshairScript : MonoBehaviour
     parentReference_ = parent.GetComponent<MissileScript>();
   }
 
-  public void StartSearching(ref List<PipeScript> pipes, int numPaths, float blinkDuration)
+  public void StartSearching(ref List<PipeScript> pipes, int numPaths, float speedFactor)
   {
     if(pipes_ == null)
     {
       pipes_ = pipes;
     }
+    searchSpeed_ = Mathf.Min(17.0f, searchSpeed_ + (speedFactor * 0.4f));
     int randPipe = UnityEngine.Random.Range(0, pipes_.Count);
     transform.position = pipes_[randPipe].gameObject.transform.position;
-    blinkDuration_ = blinkDuration;
+    blinkSpeed_ *= speedFactor * 0.8f;
+    blinkLapseSpeed_ *= speedFactor * 1.25f;
     numPaths_ = numPaths;
     gameObject.SetActive(true);
     sr_.sprite = crosshairSearching_;
@@ -57,7 +62,7 @@ public class CrosshairScript : MonoBehaviour
 
   private IEnumerator CountForLaunchMissile()
   {
-    yield return new WaitForSeconds(blinkDuration_);
+    yield return new WaitForSeconds(Mathf.Max( blinkDuration_ - blinkSpeed_, 0.8f));
     parentReference_.Spawn(rowTarget_, transform.position);
     gameObject.SetActive(false);
   }
@@ -69,7 +74,7 @@ public class CrosshairScript : MonoBehaviour
     if(dir.magnitude > 0.06f)
     {
       dir.Normalize();
-      transform.position += dir * Time.deltaTime * speed_;
+      transform.position += dir * Time.deltaTime * searchSpeed_;
     }else
     {
       targetTr_ = null;
@@ -101,7 +106,7 @@ public class CrosshairScript : MonoBehaviour
 
   private IEnumerator Blink()
   {
-    yield return new WaitForSeconds(blinkLapse_);
+    yield return new WaitForSeconds(Mathf.Max(blinkLapse_ - blinkLapseSpeed_, 0.2f));
     if (gameObject.activeSelf)
     {
       if (sr_.sprite == crosshairPointing_)
