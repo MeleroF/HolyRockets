@@ -34,6 +34,7 @@ public class CrosshairScript : MonoBehaviour
   [NonSerialized]
   private List<PipeScript> pipes_ = null;
   private Transform targetTr_ = null;
+  private Transform followTr_ = null;
 
   public void Init()
   {
@@ -55,6 +56,7 @@ public class CrosshairScript : MonoBehaviour
     blinkSpeed_ *= speedFactor * 0.8f;
     blinkLapseSpeed_ *= speedFactor * 1.25f;
     numPaths_ = numPaths;
+    followTr_ = null;
     gameObject.SetActive(true);
     sr_.sprite = crosshairSearching_;
     isSearching_ = true;
@@ -65,6 +67,7 @@ public class CrosshairScript : MonoBehaviour
     yield return new WaitForSeconds(Mathf.Max( blinkDuration_ - blinkSpeed_, 0.8f));
     parentReference_.Spawn(rowTarget_, transform.position);
     gameObject.SetActive(false);
+
   }
 
   private void AvanceToTarget()
@@ -77,6 +80,7 @@ public class CrosshairScript : MonoBehaviour
       transform.position += dir * Time.deltaTime * searchSpeed_;
     }else
     {
+      followTr_ = targetTr_;
       targetTr_ = null;
       pathCount_++;
       if (pathCount_ >= numPaths_)
@@ -127,6 +131,9 @@ public class CrosshairScript : MonoBehaviour
     if(isSearching_)
     {
       SearchTarget();
+    }else if (followTr_)
+    {
+      transform.position = followTr_.position;
     }
   }
 }

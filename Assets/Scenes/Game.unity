@@ -1917,10 +1917,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   leanDuration_: 1.5
-  leanSpeed_: 2
+  leanSpeed_: 2.5
   leanDegrees_: 7
-  swingTimeOut_: 5
-  offsetPosLean_: -2
+  swingTimeOut_: 9
+  offsetPosLean_: -1.4
   goDownSpeed_: 1
 --- !u!1 &2002003015
 GameObject:
