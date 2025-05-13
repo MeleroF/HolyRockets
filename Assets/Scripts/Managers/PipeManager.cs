@@ -101,9 +101,11 @@ public class PipeManager : MonoBehaviour
 
     foreach(char c in Input.inputString)
     {
-      if (charDictionary.ContainsKey(c))
+      char character = char.ToLower(c);
+
+      if (charDictionary.ContainsKey(character))
       {
-        pipes_[charDictionary[c]].OpenPipe();
+        pipes_[charDictionary[character]].OpenPipe();
       } 
     }
   }

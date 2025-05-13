@@ -28,6 +28,7 @@ public class LifeManager : MonoBehaviour
 
   private Heart[] hearts_;
   private int numLifes;
+  private Transform shipTransform_;
   // Start is called before the first frame update
 
   private void GetHeartsFromCanvas(ref Canvas canvas)
