@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9454521ad91b13d4a81e0b9beaa20e59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lifeManager_: {fileID: 2442375508170291791, guid: 81ff5797b5ca78c4e984dacb542f210d, type: 3}
   upcomingRocketManager_: {fileID: 9081258694929414905, guid: e05b4fab30c227446b2cb4b4b3180563, type: 3}
   missileManager_: {fileID: 7461686195198580694, guid: c503d21cad3c9754e8375e6913f8158d, type: 3}
   pipeManager_: {fileID: 84682734816788340, guid: 39d21dd76c3489149a4ea381376ead03, type: 3}

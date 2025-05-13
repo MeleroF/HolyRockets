@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static UpcomingRocketManager;
 using static MissileDestroy;
 using static PipeScript;
@@ -8,7 +9,9 @@ using static PipeScript;
 public class GameManager : MonoBehaviour
 {
   [SerializeField]
-  private LevelManager levelManager_;
+  private Canvas canvas_;
+  [SerializeField]
+  private LifeManager lifeManager_;
   [SerializeField]
   private UpcomingRocketManager upcomingRocketManager_;
   [SerializeField]
@@ -38,6 +41,7 @@ public class GameManager : MonoBehaviour
     pipeManager_?.Init(ref pipeSpawnPoint_);
     missileManager_?.Init();
     upcomingRocketManager_?.Init(ref upcomingRocketSpawnPoint_, missileManager_.numMaxMissiles_);
+    lifeManager_?.Init(ref canvas_);
 
     UpdateSettingsForLevel();
     SummonRocketsInLevel();

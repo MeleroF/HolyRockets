@@ -124,8 +124,6 @@ public class CrosshairScript : MonoBehaviour
 
   private void Update()
   {
-    if(gameObject.activeSelf) 
-      Debug.Log("Crosshair actived");
     if(isSearching_)
     {
       SearchTarget();

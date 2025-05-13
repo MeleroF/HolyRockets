@@ -47,5 +47,5 @@ MonoBehaviour:
   pipePrefab_: {fileID: -3286946767224984561, guid: 11a0667ce8f443c4199904da60ad3581, type: 3}
   numRows_: 4
   numCols_: 10
-  gapX_: 0.3
-  gapY_: -0.4
+  gapX_: 0.45
+  gapY_: -0.23
