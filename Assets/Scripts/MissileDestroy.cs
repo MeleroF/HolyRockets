@@ -23,10 +23,22 @@ public class MissileDestroy : MonoBehaviour
     {
       SpriteRenderer sr = collision.gameObject.GetComponent<SpriteRenderer>();
       ParentController controller = collision.gameObject.GetComponent<ParentController>();
+      MissileScript missile = collision.gameObject.GetComponent<MissileScript>();
 
       if (sr.sortingLayerID != sm_.backSortingLayerID) return;
 
       OnMissileCatch?.Invoke();
+
+      // Instantiate score obtained prefab.
+      GameObject prefab = Resources.Load<GameObject>("ScoreObtained");
+      Canvas canvas = FindObjectOfType<Canvas>();
+      Vector3 screenPos = Camera.main.WorldToScreenPoint(collision.transform.position);
+      screenPos.y += 150.0f;
+      GameObject instance = Instantiate(prefab, canvas.transform);
+      instance.GetComponent<RectTransform>().position = screenPos;
+
+      // Update Score
+      HUDManager.instance_.UpdateScoreValue(missile.point_amount_);
 
       controller.ChangeParentState(false);
     }

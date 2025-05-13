@@ -9,6 +9,12 @@ public class MissileScript : MonoBehaviour
   [SerializeField]
   private float fallSpeed_ = 2.0f;
 
+  [SerializeField]
+  private int type = 0;
+
+  [SerializeField]
+  public int point_amount_ = 100;
+
   private float spawnPosY = 0.0f;
   private float initialSpawnPosX = 0.0f;
   private float screenWidth = 0.0f;
