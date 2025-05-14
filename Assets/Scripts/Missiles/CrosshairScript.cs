@@ -5,12 +5,7 @@ using UnityEngine;
 
 public class CrosshairScript : MonoBehaviour
 {
-  [SerializeField]
-  private Sprite crosshairSearching_;
-  [SerializeField]
-  private Sprite crosshairPointing_;
-  [SerializeField]
-  private Sprite crosshairBlink_;
+  
   [SerializeField]
   private float searchSpeed_ = 2.0f;
   [SerializeField]
@@ -35,6 +30,13 @@ public class CrosshairScript : MonoBehaviour
   private List<PipeScript> pipes_ = null;
   private Transform targetTr_ = null;
   private Transform followTr_ = null;
+
+  [NonSerialized]
+  public Sprite crosshairSearching_;
+  [NonSerialized]
+  public Sprite crosshairPointing_;
+  [NonSerialized]
+  public Sprite crosshairBlink_;
 
   public void Init()
   {

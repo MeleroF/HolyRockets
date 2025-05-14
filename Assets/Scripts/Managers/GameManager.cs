@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
   {
     pipeManager_?.Init(ref pipeSpawnPoint_);
     missileManager_?.Init();
-    upcomingRocketManager_?.Init(ref upcomingRocketSpawnPoint_, missileManager_.numMaxMissiles_);
+    upcomingRocketManager_?.Init(ref upcomingRocketSpawnPoint_, missileManager_.realMaxMissiles_);
     lifeManager_?.Init(ref canvas_);
 
     UpdateSettingsForLevel();
@@ -86,7 +86,7 @@ public class GameManager : MonoBehaviour
 
   private void CanSpawnMissiles(int numMissiles)
   {
-    missileManager_.SpawnMissiles(numMissiles, ref pipeManager_.pipes_, minPathsCrosshair, missileManager_.maxPaths_, maxSpeedFactor_);
+    missileManager_.SpawnMissiles(numMissiles, ref pipeManager_.pipes_, minPathsCrosshair, missileManager_.maxPaths_, maxSpeedFactor_, currentLevel_);
   }
 
   // Update is called once per frame

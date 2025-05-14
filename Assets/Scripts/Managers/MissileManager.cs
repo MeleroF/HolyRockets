@@ -1,28 +1,75 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using static UpcomingRocketManager;
 
 public class MissileManager : MonoBehaviour
 {
   [SerializeField]
-  private MissileScript missilePrefab_;
-  
+  private List<RocketStats> missileStatPrefabs_;
+  [SerializeField]
   public int maxPaths_ = 5;
-  public int numMaxMissiles_ = 15;
-
+  [SerializeField]
+  public int maxMissiles_ = 15;
 
   [NonSerialized]
-  private List<MissileScript> missiles = new List<MissileScript>();
+  public int realMaxMissiles_ = 0;
+
+  private class MissileTypeClassifier
+  {
+    public int index_ = 0;
+    public int lastSize_ = 0;
+    public int numMissiles_ = 0;
+    public int levelStart_ = 0;
+    public List<MissileScript> missiles_ =  new List<MissileScript>();
+  }
+
+  [NonSerialized]
+  private List<MissileTypeClassifier> missileTypes_ = new List<MissileTypeClassifier>();
+
+  private void GetNumPrefabs(ref List<int> numMissilesPerPrefab_)
+  {
+    float percentageFactor = 1.0f / 100.0f;
+    foreach(RocketStats prefab in missileStatPrefabs_)
+    {
+      int num = Mathf.CeilToInt(prefab.percentageSpawn_ * maxMissiles_ * percentageFactor);
+      numMissilesPerPrefab_.Add(num);
+      realMaxMissiles_ += num;
+    }
+  }
 
   private void GenerateMissiles()
   {
-    for(int i = 0; i < numMaxMissiles_; ++i)
+    List<int> numMissilesPerPrefab_ = new List<int>();
+    GetNumPrefabs(ref numMissilesPerPrefab_);
+
+    int prefabCount = 0;
+    foreach(int numPrefab in numMissilesPerPrefab_)
     {
-      Quaternion rot = Quaternion.Euler(0f, 0f, 90f);
-      MissileScript newMissile = Instantiate(missilePrefab_, new Vector3(), rot);
-      missiles.Add(newMissile);
+      MissileTypeClassifier classifier = new MissileTypeClassifier(); 
+      for (int i = 0; i < numPrefab; ++i)
+      {
+        Quaternion rot = Quaternion.Euler(0f, 0f, 90f);
+        MissileScript newMissile = Instantiate(missileStatPrefabs_[prefabCount].prefab_, new Vector3(), rot);
+        newMissile.Init(ref missileStatPrefabs_[prefabCount].sprite_);
+        if(i == 0)
+        {
+          classifier.levelStart_ = missileStatPrefabs_[prefabCount].levelStart;
+        }
+        if(newMissile is FallMarker newFallMarker)
+        {
+          newFallMarker.InitCrossHair(ref missileStatPrefabs_[prefabCount].crossHairSprites_);
+        }
+        classifier.missiles_.Add(newMissile);
+      }
+      
+      classifier.lastSize_ = prefabCount == 0 ? prefabCount : numMissilesPerPrefab_[prefabCount - 1];
+      classifier.index_ = prefabCount;
+      classifier.numMissiles_ = numMissilesPerPrefab_[prefabCount];
+      missileTypes_.Add(classifier);
+      prefabCount++;
     }
   }
   
@@ -32,19 +79,91 @@ public class MissileManager : MonoBehaviour
     GenerateMissiles();
   }
 
-  public void SpawnMissiles(int numMissilesWave, ref List<PipeScript> pipes, int minPaths, int maxPaths, float maxSpeedFactor)
+  private int GetRocketTypeWithBiggestProbabilty(ref int[] typeCounters)
   {
-    int nmissileSpawned = 0;
-    for(int i = 0; i < missiles.Count && nmissileSpawned < numMissilesWave; ++i)
+    float biggestProb = 0;
+    int typeWithBiggestProb = 0;
+    int type;
+    for (type = 0; type < missileStatPrefabs_.Count; ++type)
     {
-      if (!missiles[i].controller_.isEnabled_)
+      if (missileStatPrefabs_[type].percentageSpawn_ > biggestProb)
       {
-        int numPaths = UnityEngine.Random.Range(minPaths, maxPaths);
-        float speedFactor = UnityEngine.Random.Range(1.0f, maxSpeedFactor);
-        missiles[i].crosshair_.StartSearching(ref pipes, numPaths, speedFactor);
-        nmissileSpawned++;
+        biggestProb = missileStatPrefabs_[type].percentageSpawn_;
+        typeWithBiggestProb = type;
       }
+    }
+
+    return typeWithBiggestProb;
+  }
+
+  private int GetRocketTypeByPercentage(ref int[] typeCounters, int currentLevel)
+  {
+    int selected = GetRocketTypeWithBiggestProbabilty(ref typeCounters);
+    for(int i = 0; i < missileStatPrefabs_.Count; ++i)
+    {
+      if (typeCounters[i] >= missileTypes_[i].numMissiles_) continue;
+      if (missileTypes_[i].levelStart_ > currentLevel) continue;
+      bool isSelect = (UnityEngine.Random.value * 100) < missileStatPrefabs_[i].percentageSpawn_;
+      if (isSelect)
+      {
+        return i;
+      }
+    }
+
+    return selected;
+  }
+
+  private void SpawnByType(int type, 
+                          ref HashSet<int> isMissileDisponible,
+                          ref List<PipeScript> pipes,
+                          ref int nmissileSpawned,
+                          int nmaxMissilesWave,
+                          int minPaths,
+                          int maxPaths,
+                          float maxSpeedFactor)
+  {
+    MissileTypeClassifier missileCalifier = missileTypes_[type];
+    for (int i = 0; i < missileCalifier.numMissiles_; ++i)
+    {
+      if (nmissileSpawned >= nmaxMissilesWave) break;
+      if (isMissileDisponible.Contains(missileCalifier.lastSize_ + i)) continue;
+
+      switch(missileStatPrefabs_[type].rocketType_)
+      {
+        case RocketType.FALLMARKER:
+          FallMarker fallMarker = (FallMarker)missileCalifier.missiles_[i];
+          if(!fallMarker.controller_.isEnabled_)
+          {
+            int numPaths = UnityEngine.Random.Range(minPaths, maxPaths);
+            float speedFactor = UnityEngine.Random.Range(1.0f, maxSpeedFactor);
+            fallMarker.crosshair_.StartSearching(ref pipes, numPaths, speedFactor);
+            nmissileSpawned++;
+          }
+          break;
+        case RocketType.REMOTE:
+          break;
+        default:
+          break;
+      }
+
+      isMissileDisponible.Add(missileCalifier.lastSize_ + i);
+      break;
     }
   }
 
+  public void SpawnMissiles(int numMissilesWave, ref List<PipeScript> pipes, 
+                            int minPaths, int maxPaths,
+                            float maxSpeedFactor, int currentLevel)
+  {
+    int nmissileSpawned = 0;
+
+    int[] typeCounter = new int[missileTypes_.Count];
+    HashSet<int> isMissileDisponible = new HashSet<int>();
+
+    while (nmissileSpawned < numMissilesWave && isMissileDisponible.Count < realMaxMissiles_)
+    {
+      int randType = GetRocketTypeByPercentage(ref typeCounter, currentLevel);
+      SpawnByType(randType, ref isMissileDisponible,ref pipes, ref nmissileSpawned, numMissilesWave, minPaths, maxPaths_, maxSpeedFactor); 
+    }
+  }
 }

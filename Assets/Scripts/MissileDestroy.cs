@@ -7,6 +7,9 @@ public class MissileDestroy : MonoBehaviour
   public delegate void MissileCatched();
   public static event MissileCatched OnMissileCatch;
 
+  public delegate void HealMissileCatched();
+  public static event HealMissileCatched OnHealMissileCatch;
+
   private int rocketLayer_ = 0;
   private SpriteMask sm_;
 
@@ -29,6 +32,11 @@ public class MissileDestroy : MonoBehaviour
 
       OnMissileCatch?.Invoke();
 
+      if(missile.stats_.rocketSpeciality_ == RocketSpeciality.HEAL)
+      {
+        OnHealMissileCatch?.Invoke();
+      }
+
       // Instantiate score obtained prefab.
       GameObject prefab = Resources.Load<GameObject>("ScoreObtained");
       Canvas canvas = FindObjectOfType<Canvas>();
@@ -36,10 +44,10 @@ public class MissileDestroy : MonoBehaviour
       screenPos.y += 150.0f;
       GameObject instance = Instantiate(prefab, canvas.transform);
       instance.GetComponent<RectTransform>().position = screenPos;
-      instance.GetComponent<ScoreObtainedScript>().SetScoreText(missile.point_amount_);
+      instance.GetComponent<ScoreObtainedScript>().SetScoreText(100);
 
       // Update Score
-      HUDManager.instance_.UpdateScoreValue(missile.point_amount_);
+      HUDManager.instance_.UpdateScoreValue(100);
 
       controller.ChangeParentState(false);
     }

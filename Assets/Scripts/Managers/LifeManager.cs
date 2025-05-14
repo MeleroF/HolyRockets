@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static PipeScript;
+using static MissileDestroy;
 
 public class LifeManager : MonoBehaviour
 {
@@ -53,6 +54,7 @@ public class LifeManager : MonoBehaviour
   {
     GetHeartsFromCanvas(ref canvas);
     OnRocketCollision += BreakFirstHeart;
+    OnHealMissileCatch += HealFirstHeart;
   }
 
   private void BreakFirstHeart()

@@ -1,0 +1,36 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public abstract class MissileScript : MonoBehaviour
+{
+
+  public RocketStats stats_;
+  protected float spawnPosY = 0.0f;
+
+  protected SpriteRenderer sr_;
+
+  // Start is called before the first frame update
+  protected abstract void Awake();
+
+  public void Init(ref Sprite sprite)
+  {
+    sr_.sprite = sprite;
+  }
+
+  // Update is called once per frame
+  public abstract void Spawn(int assignedRow, Vector3 pos);
+
+  private void LetFallMissile()
+  {
+    transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * stats_.fallSpeed_, transform.position.z);
+  }
+
+  private void Update()
+  {
+    LetFallMissile();
+  }
+
+ 
+}

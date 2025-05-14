@@ -44,5 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ae8173f0abd7049b228191a7901bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  missilePrefab_: {fileID: 3547238030306724817, guid: 0fb9c36b024dd264aaba9e90fb4aa209, type: 3}
-  numMaxMissiles_: 10
+  missileStatPrefabs_:
+  - {fileID: 11400000, guid: 650448c07f44c3e4aa5a01ee84437aee, type: 2}
+  - {fileID: 11400000, guid: 15728b66820e474489fbab625cce93b3, type: 2}
+  maxPaths_: 5
+  maxMissiles_: 20

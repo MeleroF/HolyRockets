@@ -97,9 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d977b3b1e070124a8b5dc1767e2e1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crosshairSearching_: {fileID: 21300000, guid: 16b7c93fa8a3385419f904299ad2eacf, type: 3}
-  crosshairPointing_: {fileID: 21300000, guid: 520d90e16d8adaf4fb40b30c8cddbd04, type: 3}
-  crosshairBlink_: {fileID: 21300000, guid: fe23d6fe53ddbd04f9c5cd43b1195964, type: 3}
   searchSpeed_: 2
   blinkLapseSpeed_: 0.2
   blinkSpeed_: 0.1
@@ -113,12 +110,12 @@ GameObject:
   m_Component:
   - component: {fileID: 7841539949488817112}
   - component: {fileID: 2548837376522327415}
-  - component: {fileID: 3547238030306724817}
   - component: {fileID: -6172338709639839507}
   - component: {fileID: 2707038114109581767}
   - component: {fileID: 2641320618746662416}
+  - component: {fileID: 8393838938966767496}
   m_Layer: 3
-  m_Name: Missile
+  m_Name: FallMarkerRocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,21 +189,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 2
   m_SpriteSortPoint: 0
---- !u!114 &3547238030306724817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8984212838003453078}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f91d6b8202a03549a5c5ea8b9ee38a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fallSpeed_: -13
-  type: 0
-  point_amount_: 100
 --- !u!61 &-6172338709639839507
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -291,3 +273,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1b31f2ad78b27f438092613033a6cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8393838938966767496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8984212838003453078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa002495eac97844faecff4c8bc9b6c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats_: {fileID: 11400000, guid: 650448c07f44c3e4aa5a01ee84437aee, type: 2}
