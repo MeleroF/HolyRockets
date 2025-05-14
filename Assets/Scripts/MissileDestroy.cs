@@ -36,6 +36,7 @@ public class MissileDestroy : MonoBehaviour
       screenPos.y += 150.0f;
       GameObject instance = Instantiate(prefab, canvas.transform);
       instance.GetComponent<RectTransform>().position = screenPos;
+      instance.GetComponent<ScoreObtainedScript>().SetScoreText(missile.point_amount_);
 
       // Update Score
       HUDManager.instance_.UpdateScoreValue(missile.point_amount_);

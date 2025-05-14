@@ -57,8 +57,6 @@ public class HUDManager : MonoBehaviour
 
         if (alpha_ != 1.0f)
             FixColor();
-
-        Test();
     }
 
     void UpdateScoreText()
@@ -79,17 +77,15 @@ public class HUDManager : MonoBehaviour
     }
     
 
-    public void Test()
+    public void ScoreUpdatedEffect()
     {
-        if(Input.GetKey(KeyCode.A)){
-            UpdateScoreValue(100);
-            score_.GetComponent<ShakeUIEffect>().ShakeObject();
-            alpha_ = 0.0f;
-        }
+        score_.GetComponent<ShakeUIEffect>().ShakeObject();
+        alpha_ = 0.0f;
     }
 
     public void UpdateScoreValue(int amount)
     {
+        ScoreUpdatedEffect();
         fake_score_ = score_value_;
         score_value_ += amount;
 

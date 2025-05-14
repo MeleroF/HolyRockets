@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
   private MissileManager missileManager_;
   [SerializeField]
   private PipeManager pipeManager_;
-
   [SerializeField]
   private Transform pipeSpawnPoint_;
   [SerializeField]

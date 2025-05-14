@@ -56,6 +56,10 @@ public class PipeScript : MonoBehaviour
       ParentController controller = collision.gameObject.GetComponent<ParentController>();
       if (sr.sortingLayerID != sr_.sortingLayerID) return;
 
+      // Instantiate explosion.
+      GameObject prefab = Resources.Load<GameObject>("Explosion");
+      GameObject instance = Instantiate(prefab, collision.transform.position, Quaternion.identity);
+
       OnRocketCollision?.Invoke();
       controller.ChangeParentState(false);
     }

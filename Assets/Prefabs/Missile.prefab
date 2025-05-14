@@ -205,6 +205,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fallSpeed_: -13
+  type: 0
+  point_amount_: 100
 --- !u!61 &-6172338709639839507
 BoxCollider2D:
   m_ObjectHideFlags: 0
