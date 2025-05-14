@@ -3058,7 +3058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pipeManager_: {fileID: 84682734816788340, guid: 39d21dd76c3489149a4ea381376ead03, type: 3}
-  pipeSpawnPoint_: {fileID: 539010123}
+  pipeSpawnPoint_: {fileID: 0}
   cover_screen_: {fileID: 599685590}
 --- !u!4 &412647671
 Transform:
@@ -4648,37 +4648,6 @@ SpriteMask:
   m_BackSortingOrder: 1
   m_IsCustomRangeActive: 1
   m_SpriteSortPoint: 0
---- !u!1 &539010122
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 539010123}
-  m_Layer: 0
-  m_Name: PipeSpawnerLoc
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &539010123
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539010122}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.06, y: -1.27, z: -4.4701886}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &542324887
 GameObject:
   m_ObjectHideFlags: 0
@@ -19186,6 +19155,5 @@ SceneRoots:
   - {fileID: 647751048}
   - {fileID: 2051676096}
   - {fileID: 479919117}
-  - {fileID: 539010123}
   - {fileID: 1124958892}
   - {fileID: 918694219}

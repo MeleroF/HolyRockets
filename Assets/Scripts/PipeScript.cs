@@ -9,7 +9,9 @@ public class PipeScript : MonoBehaviour
   public static event RocketCollisioned OnRocketCollision;
 
   public Sprite lidOpen_, lidClosed_;
-  private bool isLidOpen_ = false;
+
+  [NonSerialized]
+  public bool isLidOpen_ = false;
 
   [NonSerialized]
   public SpriteRenderer sr_;
@@ -19,18 +21,38 @@ public class PipeScript : MonoBehaviour
 
   private float timeOpen_ = 0.8f;
 
-  public void OpenPipe()
+  public void OpenPipe(ref int openedPipes, int missilesPerWave)
   {
     if(!isLidOpen_)
     {
-      sr_.sprite = lidOpen_;
-      isLidOpen_ = true;
-      collider_.enabled = false;
-      StartCoroutine(CountForClosePipe());
+      if (openedPipes < missilesPerWave)
+      {
+        OpenPipe(ref openedPipes);
+      }
+    }
+    else
+    {
+      ClosePipe(ref openedPipes);
     }
   }
 
-  private IEnumerator CountForClosePipe()
+  private void OpenPipe(ref int openedPipes)
+  {
+    sr_.sprite = lidOpen_;
+    isLidOpen_ = true;
+    collider_.enabled = false;
+    openedPipes++;
+  }
+
+  public void ClosePipe(ref int openedPipes)
+  {
+    sr_.sprite = lidClosed_;
+    isLidOpen_ = false;
+    collider_.enabled = true;
+    openedPipes--;
+  }
+
+    private IEnumerator CountForClosePipe()
   {
     yield return new WaitForSeconds(timeOpen_);
 

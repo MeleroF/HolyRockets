@@ -35,13 +35,13 @@ public class ScoreObtainedScript : MonoBehaviour
 
     private void FixColor()
     {
-        if (alpha2_ + Time.deltaTime / score_text_color_time_ > 1.0f)
+        if (alpha2_ + Time.unscaledDeltaTime / score_text_color_time_ > 1.0f)
         {
             alpha2_ = 1.0f;
         }
         else
         {
-            alpha2_ += Time.deltaTime / score_text_color_time_;
+            alpha2_ += Time.unscaledDeltaTime / score_text_color_time_;
         }
         current_score_text_color_ = Vector3.Lerp(tint_text_color_, base_text_color_, alpha2_);
 
@@ -50,13 +50,13 @@ public class ScoreObtainedScript : MonoBehaviour
 
     private void MoveUp()
     {
-        transform.position = new Vector3(transform.position.x, transform.position.y + move_speed_ * Time.deltaTime, transform.position.z);
+        transform.position = new Vector3(transform.position.x, transform.position.y + move_speed_ * Time.unscaledDeltaTime, transform.position.z);
     }
 
 
     private void DissappearingCounter()
     {
-        dissappearing_timer += Time.deltaTime;
+        dissappearing_timer += Time.unscaledDeltaTime;
 
         if (dissappearing_timer > time_to_dissappear_)
             dissappearing = true;

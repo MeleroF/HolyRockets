@@ -20,6 +20,12 @@ public class ShakeEffect : MonoBehaviour
     prevPos = transform.position;
   }
 
+  private void OnDestroy()
+  {
+    OnRocketCollision -= ShakeStart;
+  }
+
+
   private void ShakeStart()
   {
     prevPos = transform.position;

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: HealingFallMarker
   m_EditorClassIdentifier: 
   prefab_: {fileID: 8393838938966767496, guid: a621552f7a307c34994fe10599473b17, type: 3}
+  rocketSpeciality_: 1
   rocketType_: 0
   fallSpeed_: -10
   percentageSpawn_: 30

@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PipeManager : MonoBehaviour
 {
+  private int pipes_opened_ = 0;
 
   [SerializeField]
   private PipeScript pipePrefab_ = null;
@@ -96,7 +97,18 @@ public class PipeManager : MonoBehaviour
     GeneratePipes(ref spawnPointPipes);
   }
 
-  public void DetectInput()
+  public void CloseAllPipes()
+  {
+    for (int i = 0; i < pipes_.Count; i++)
+    {
+      if (pipes_[i].isLidOpen_)
+      {
+        pipes_[i].ClosePipe(ref pipes_opened_);
+      }
+    }
+  }
+
+  public void DetectInput(int missilesPerWave)
   {
 
     foreach(char c in Input.inputString)
@@ -105,7 +117,7 @@ public class PipeManager : MonoBehaviour
 
       if (charDictionary.ContainsKey(character))
       {
-        pipes_[charDictionary[character]].OpenPipe();
+        pipes_[charDictionary[character]].OpenPipe(ref pipes_opened_, missilesPerWave);
       } 
     }
   }

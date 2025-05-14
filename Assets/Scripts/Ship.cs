@@ -65,6 +65,11 @@ public class Ship : MonoBehaviour
     targetRotation_ = Quaternion.Euler(0.0f, 0.0f, leanDegrees_);
   }
 
+  private void OnDestroy()
+  {
+    OnRocketCollision -= TakeDamage;
+  }
+
   private void TakeDamage()
   {
     alphaLerp_ = 0.0f;

@@ -68,4 +68,9 @@ public class UpcomingRocketManager : MonoBehaviour
     OnRocketDestroid += DetectRocketsDestroid;
     GenerateUpcomingRockets(ref spawnTr);
   }
+
+  private void OnDestroy()
+  {
+    OnRocketDestroid -= DetectRocketsDestroid;
+  }
 }

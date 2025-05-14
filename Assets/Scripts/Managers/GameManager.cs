@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
   private int numWaves_ = 0;
   private int waveCounter_ = 0;
+  [SerializeField]
   private int currentLevel_ = 0;
   private int minPathsCrosshair = 0;
 
@@ -48,7 +49,6 @@ public class GameManager : MonoBehaviour
     OnAllRocketsDestroid += CanSpawnMissiles;
     OnRocketCollision += CountMissilesCatched;
     OnMissileCatch += CountMissilesCatched;
-
   }
 
   private void SummonRocketsInLevel()
@@ -75,13 +75,13 @@ public class GameManager : MonoBehaviour
       SummonRocketsInLevel();
       missileCounter_ = 0;
       waveCounter_++;
+      pipeManager_.CloseAllPipes();
       if (waveCounter_ >= numWaves_)
       {
         UpdateSettingsForLevel();
         waveCounter_ = 0;
       }
     }
-
   }
 
   private void CanSpawnMissiles(int numMissiles)
@@ -92,6 +92,13 @@ public class GameManager : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    pipeManager_?.DetectInput();
+    pipeManager_?.DetectInput(missilesWave_);
+  }
+
+  private void OnDestroy()
+  {
+    OnAllRocketsDestroid -= CanSpawnMissiles;
+    OnRocketCollision -= CountMissilesCatched;
+    OnMissileCatch -= CountMissilesCatched;
   }
 }

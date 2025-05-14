@@ -7,7 +7,7 @@ public class PauseScript : MonoBehaviour
 {
   private bool isPaused = false;
   public bool safety_options_on_ = false;
-  public GameObject pause_icon_, play_icon_, background_, home_button_, yes_button_, no_button_, bouncy_logo_;
+  public GameObject pause_icon_, play_icon_, background_, home_button_, back_to_main_menu_window, bouncy_logo_;
   public ScaleModifier audio_settings_sm_;
   public ScaleModifier scale_modifier_;
   private float pause_initial_speed_, pause_initial_angle_, audio_setting_initial_angle_;
@@ -31,13 +31,11 @@ public class PauseScript : MonoBehaviour
   {
     if (safety_options_on_)
     {
-      yes_button_.SetActive(false);
-      no_button_.SetActive(false);
+      back_to_main_menu_window.SetActive(false);
     }
     else
     {
-      yes_button_.SetActive(true);
-      no_button_.SetActive(true);
+      back_to_main_menu_window.SetActive(true);
     }
     safety_options_on_ = !safety_options_on_;
   }
@@ -51,6 +49,8 @@ public class PauseScript : MonoBehaviour
       play_icon_.SetActive(false);
       background_.SetActive(false);
       bouncy_logo_.SetActive(false);
+      back_to_main_menu_window.SetActive(false);
+      safety_options_on_ = false;
       home_button_.gameObject.SetActive(false);
       scale_modifier_.speed_ = pause_initial_speed_;
       scale_modifier_.angle_ = pause_initial_angle_;

@@ -245,4 +245,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trail_: {fileID: 136816281756418248}
   speed_range_: {x: 3, y: 8}
-  deviation_range_: {x: -30, y: 30}
+  deviation_range_: {x: -10, y: 10}

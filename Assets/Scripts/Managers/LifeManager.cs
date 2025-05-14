@@ -78,4 +78,9 @@ public class LifeManager : MonoBehaviour
     }
   }
 
+  private void OnDestroy()
+  {
+    OnRocketCollision -= BreakFirstHeart;
+    OnHealMissileCatch -= HealFirstHeart;
+  }
 }

@@ -23,6 +23,11 @@ public class DamageFilter : MonoBehaviour
     OnRocketCollision += StartTint;
   }
 
+  private void OnDestroy()
+  {
+    OnRocketCollision -= StartTint;
+  }
+  
   private void StartTint()
   {
     isTintActive_ = true;
