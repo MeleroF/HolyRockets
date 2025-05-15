@@ -3,13 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class PipeManager : MonoBehaviour
 {
-  private int pipes_opened_ = 0;
+  public int openedPipes_ = 0;
 
   [SerializeField]
   private PipeScript pipePrefab_ = null;
+  [SerializeField]
+  private TextMeshProUGUI availablePipesText_ = null;
   [SerializeField]
   public int numRows_ = 4 ;
   [SerializeField]
@@ -97,14 +100,28 @@ public class PipeManager : MonoBehaviour
     GeneratePipes(ref spawnPointPipes);
   }
 
-  public void CloseAllPipes()
+  public void CloseAllPipes(int missilesPerWave)
   {
     for (int i = 0; i < pipes_.Count; i++)
     {
       if (pipes_[i].isLidOpen_)
       {
-        pipes_[i].ClosePipe(ref pipes_opened_);
+        pipes_[i].ClosePipe(ref openedPipes_);
+        UpdatePipesOpenedHUD(missilesPerWave);
       }
+    }
+  }
+
+  public void UpdatePipesOpenedHUD(int missilesPerWave)
+  {
+    availablePipesText_.text = "x" + (missilesPerWave - openedPipes_).ToString();
+    if (openedPipes_ == missilesPerWave)
+    {
+      availablePipesText_.color = Color.red;
+    }
+    else
+    {
+      availablePipesText_.color = new Color(0.3f, 0.3f, 0.3f, 1.0f);
     }
   }
 
@@ -117,7 +134,10 @@ public class PipeManager : MonoBehaviour
 
       if (charDictionary.ContainsKey(character))
       {
-        pipes_[charDictionary[character]].OpenPipe(ref pipes_opened_, missilesPerWave);
+        if (pipes_[charDictionary[character]].OpenPipe(ref openedPipes_, missilesPerWave))
+        {
+          UpdatePipesOpenedHUD(missilesPerWave);
+        }
       } 
     }
   }

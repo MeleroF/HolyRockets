@@ -21,18 +21,21 @@ public class PipeScript : MonoBehaviour
 
   private float timeOpen_ = 0.8f;
 
-  public void OpenPipe(ref int openedPipes, int missilesPerWave)
+  public bool OpenPipe(ref int openedPipes, int missilesPerWave)
   {
     if(!isLidOpen_)
     {
       if (openedPipes < missilesPerWave)
       {
         OpenPipe(ref openedPipes);
+        return true;
       }
+      return false;
     }
     else
     {
       ClosePipe(ref openedPipes);
+      return true;
     }
   }
 

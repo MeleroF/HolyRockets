@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
   private void SummonRocketsInLevel()
   {
     missilesWave_ = UnityEngine.Random.Range(1, maxMissilesWave_);
+    pipeManager_.UpdatePipesOpenedHUD(missilesWave_);
     upcomingRocketManager_.SummonRockets(missilesWave_);
   }
 
@@ -75,7 +76,7 @@ public class GameManager : MonoBehaviour
       SummonRocketsInLevel();
       missileCounter_ = 0;
       waveCounter_++;
-      pipeManager_.CloseAllPipes();
+      pipeManager_.CloseAllPipes(missilesWave_);
       if (waveCounter_ >= numWaves_)
       {
         UpdateSettingsForLevel();
