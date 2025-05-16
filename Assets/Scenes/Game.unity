@@ -5968,7 +5968,7 @@ PrefabInstance:
       objectReference: {fileID: 1325756217}
     - target: {fileID: -5448679825564713751, guid: fb26b9450afe0994cb546eb7453d0072, type: 3}
       propertyPath: currentLevel_
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5448679825564713751, guid: fb26b9450afe0994cb546eb7453d0072, type: 3}
       propertyPath: missileManager_

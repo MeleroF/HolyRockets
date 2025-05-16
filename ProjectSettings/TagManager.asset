@@ -65,3 +65,9 @@ TagManager:
   - name: RocketRow5
     uniqueID: 192364705
     locked: 0
+  - name: Shadow
+    uniqueID: 666654521
+    locked: 0
+  - name: PostShadow
+    uniqueID: 1807286351
+    locked: 0

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd3a9179acbb6f42b90d194681878c3, type: 3}
+  m_Name: SORemoteRocket
+  m_EditorClassIdentifier: 
+  prefab_: {fileID: -7801952602491048749, guid: a013c70d35d5c0945bbc269d60fbf5c4, type: 3}
+  rocketSpeciality_: 0
+  rocketType_: 1
+  fallSpeed_: -10
+  percentageSpawn_: 50
+  levelStart: 0
+  sprite_: {fileID: -2119176890, guid: ef0f6ef6dc7009f40b260322eccf3dae, type: 3}
+  crossHairSprites_: []
+  collisionAudio_: {fileID: 0}
+  cathedAudio_: {fileID: 0}

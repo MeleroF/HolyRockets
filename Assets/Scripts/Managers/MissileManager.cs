@@ -51,8 +51,18 @@ public class MissileManager : MonoBehaviour
       MissileTypeClassifier classifier = new MissileTypeClassifier(); 
       for (int i = 0; i < numPrefab; ++i)
       {
+        MissileScript newMissile = null;
         Quaternion rot = Quaternion.Euler(0f, 0f, 90f);
-        MissileScript newMissile = Instantiate(missileStatPrefabs_[prefabCount].prefab_, new Vector3(), rot);
+        if(missileStatPrefabs_[prefabCount].prefab_ is Remote remotePrefab)
+        {
+          Shadow shadow = Instantiate(remotePrefab.shadow_, new Vector3(), Quaternion.Euler(0f, 0f, 0.0f));
+          newMissile = shadow.remote_;
+        }
+        else
+        {
+          newMissile = Instantiate(missileStatPrefabs_[prefabCount].prefab_, new Vector3(), rot);
+        }
+        
         newMissile.Init(ref missileStatPrefabs_[prefabCount].sprite_);
         if(i == 0)
         {
