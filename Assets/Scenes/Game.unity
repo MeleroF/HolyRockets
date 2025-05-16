@@ -5903,7 +5903,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2749685664353288226, guid: a232a9016e51d6649b81c667afdd6fd5, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3554714054791037467, guid: a232a9016e51d6649b81c667afdd6fd5, type: 3}
+      propertyPath: use_unscaled_time_
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4450135590594931140, guid: a232a9016e51d6649b81c667afdd6fd5, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
