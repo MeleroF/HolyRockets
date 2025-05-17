@@ -29,6 +29,7 @@ public class PauseScript : MonoBehaviour
 
   public void ToggleSafetyOptions()
   {
+    AudioManager.instance_.PlaySFX(0);
     if (safety_options_on_)
     {
       back_to_main_menu_window.SetActive(false);
@@ -42,6 +43,7 @@ public class PauseScript : MonoBehaviour
 
   public void TogglePause()
   {
+    AudioManager.instance_.PlaySFX(0);
     if (isPaused)
     {
       // Resuming

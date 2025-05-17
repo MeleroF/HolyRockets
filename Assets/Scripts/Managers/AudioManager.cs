@@ -9,7 +9,7 @@ public class AudioManager : MonoBehaviour
 
   static public float music_volume_ = 1.0f;
   static public float sfx_volume_ = 1.0f;
-  public AudioSource music_source, sfx_source_;
+  public AudioSource music_source_, sfx_source_;
   public GameObject audio_settings_window_;
   public Scrollbar music_scrollbar, sfx_scrollbar;
   private bool is_window_enabled_ = false;
@@ -24,7 +24,7 @@ public class AudioManager : MonoBehaviour
   {
     instance_ = this;
 
-    music_source.volume = music_volume_;
+    music_source_.volume = music_volume_;
     music_scrollbar.value = music_volume_;
 
     sfx_source_.volume = sfx_volume_;
@@ -32,19 +32,24 @@ public class AudioManager : MonoBehaviour
 
     if (music_.Length != 0)
     {
-      music_source.clip = music_[0];
-      music_source.Play(); 
+      music_source_.clip = music_[0];
+      music_source_.Play(); 
     }
   }
 
-  public void PlaySFX(AudioClip clip)
+  public void PlayMusic(int musicIndex)
   {
-    sfx_source_.PlayOneShot(clip);
+    music_source_.PlayOneShot(music_[musicIndex]);
+  }
+
+  public void PlaySFX(int sfxIndex)
+  {
+    sfx_source_.PlayOneShot(sfx_[sfxIndex]);
   }
 
   public void ModifyMusicVolume()
   {
-    music_source.volume = music_scrollbar.value;
+    music_source_.volume = music_scrollbar.value;
     music_volume_ = music_scrollbar.value;
   }
 
@@ -58,5 +63,6 @@ public class AudioManager : MonoBehaviour
   {
     audio_settings_window_.SetActive(!is_window_enabled_);
     is_window_enabled_ = !is_window_enabled_;
+    PlaySFX(0);
   }
 }

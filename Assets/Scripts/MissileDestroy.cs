@@ -35,6 +35,11 @@ public class MissileDestroy : MonoBehaviour
       if(missile.stats_.rocketSpeciality_ == RocketSpeciality.HEAL)
       {
         OnHealMissileCatch?.Invoke();
+        AudioManager.instance_.PlaySFX(4);
+      } 
+      else
+      {
+        AudioManager.instance_.PlaySFX(3);
       }
 
       // Instantiate score obtained prefab.

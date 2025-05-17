@@ -35,7 +35,7 @@ public class DamageFilter : MonoBehaviour
 
   private void TintScreen()
   {
-    alpha_ += Time.deltaTime * speed_;
+    alpha_ += Time.unscaledDeltaTime * speed_;
     alpha_ = Mathf.Clamp(alpha_, 0.0f, maxLimit_);
     
     if(alpha_ >= maxLimit_)

@@ -30,7 +30,7 @@ public class ScoreObtainedScript : MonoBehaviour
         text_fill_.color = new Color(text_fill_.color.r, text_fill_.color.g, text_fill_.color.b, 1 - alpha_);
         text_outline_.color = new Color(text_outline_.color.r, text_outline_.color.g, text_outline_.color.b, 1 - alpha_);
 
-        alpha_ += Time.deltaTime / fading_time_;
+        alpha_ += Time.unscaledDeltaTime / fading_time_;
     }
 
     private void FixColor()

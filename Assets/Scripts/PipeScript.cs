@@ -84,6 +84,7 @@ public class PipeScript : MonoBehaviour
       // Instantiate explosion.
       GameObject prefab = Resources.Load<GameObject>("Explosion");
       GameObject instance = Instantiate(prefab, collision.transform.position, Quaternion.identity);
+      AudioManager.instance_.PlaySFX(2);
 
       OnRocketCollision?.Invoke();
       controller.ChangeParentState(false);
