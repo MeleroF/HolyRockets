@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
   private int missilesWave_ = 0;
   private int missileCounter_ = 0;
 
+  private int numMissilesRemoteWave = 0;
   private int numWaves_ = 0;
   private int waveCounter_ = 0;
   [SerializeField]
@@ -71,10 +72,11 @@ public class GameManager : MonoBehaviour
   private void CountMissilesCatched()
   {
     missileCounter_++;
-    if (missileCounter_ >= missilesWave_)
+    if (missileCounter_ >= missilesWave_ - numMissilesRemoteWave)
     {
       SummonRocketsInLevel();
       missileCounter_ = 0;
+      numMissilesRemoteWave = 0;
       waveCounter_++;
       pipeManager_.CloseAllPipes(missilesWave_);
       if (waveCounter_ >= numWaves_)
@@ -87,7 +89,14 @@ public class GameManager : MonoBehaviour
 
   private void CanSpawnMissiles(int numMissiles)
   {
-    missileManager_.SpawnMissiles(numMissiles, ref pipeManager_.pipes_, minPathsCrosshair, missileManager_.maxPaths_, maxSpeedFactor_, currentLevel_);
+    missileManager_.SpawnMissiles(
+                              ref numMissilesRemoteWave,
+                              numMissiles,
+                              ref pipeManager_.pipes_, 
+                              minPathsCrosshair, 
+                              maxSpeedFactor_, currentLevel_,
+                              pipeManager_.numRows_,
+                              pipeManager_.numCols_);
   }
 
   // Update is called once per frame

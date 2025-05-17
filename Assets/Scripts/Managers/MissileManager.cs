@@ -53,10 +53,11 @@ public class MissileManager : MonoBehaviour
       {
         MissileScript newMissile = null;
         Quaternion rot = Quaternion.Euler(0f, 0f, 90f);
-        if(missileStatPrefabs_[prefabCount].prefab_ is Remote remotePrefab)
+        if (missileStatPrefabs_[prefabCount].shadow_) 
         {
-          Shadow shadow = Instantiate(remotePrefab.shadow_, new Vector3(), Quaternion.Euler(0f, 0f, 0.0f));
+          Shadow shadow = Instantiate(missileStatPrefabs_[prefabCount].shadow_, new Vector3(), Quaternion.Euler(0f, 0f, 0.0f));
           newMissile = shadow.remote_;
+    
         }
         else
         {
@@ -124,13 +125,15 @@ public class MissileManager : MonoBehaviour
   }
 
   private void SpawnByType(int type, 
+                          ref int numMisssilesRemote,
                           ref HashSet<int> isMissileDisponible,
                           ref List<PipeScript> pipes,
                           ref int nmissileSpawned,
                           int nmaxMissilesWave,
                           int minPaths,
                           int maxPaths,
-                          float maxSpeedFactor)
+                          float maxSpeedFactor,
+                          int numRows, int numCols)
   {
     MissileTypeClassifier missileCalifier = missileTypes_[type];
     for (int i = 0; i < missileCalifier.numMissiles_; ++i)
@@ -151,6 +154,16 @@ public class MissileManager : MonoBehaviour
           }
           break;
         case RocketType.REMOTE:
+          Remote remote = (Remote)missileCalifier.missiles_[i];
+          if(!remote.gameObject.active)
+          {
+            int randRow = UnityEngine.Random.Range(0, numRows);
+            int numPaths = UnityEngine.Random.Range(minPaths, maxPaths);
+            float speedFactor = UnityEngine.Random.Range(1.0f, maxSpeedFactor);
+            remote.shadow_.StartStrolling(ref pipes, numPaths, speedFactor, randRow, numCols);
+            nmissileSpawned++;
+            numMisssilesRemote++;
+          }
           break;
         default:
           break;
@@ -161,9 +174,9 @@ public class MissileManager : MonoBehaviour
     }
   }
 
-  public void SpawnMissiles(int numMissilesWave, ref List<PipeScript> pipes, 
-                            int minPaths, int maxPaths,
-                            float maxSpeedFactor, int currentLevel)
+  public void SpawnMissiles(ref int numMisssilesRemote, int numMissilesWave, ref List<PipeScript> pipes, 
+                            int minPaths,float maxSpeedFactor, int currentLevel,
+                            int numRows, int numCols)
   {
     int nmissileSpawned = 0;
 
@@ -173,7 +186,15 @@ public class MissileManager : MonoBehaviour
     while (nmissileSpawned < numMissilesWave && isMissileDisponible.Count < realMaxMissiles_)
     {
       int randType = GetRocketTypeByPercentage(ref typeCounter, currentLevel);
-      SpawnByType(randType, ref isMissileDisponible,ref pipes, ref nmissileSpawned, numMissilesWave, minPaths, maxPaths_, maxSpeedFactor); 
+      SpawnByType(randType, 
+        ref numMisssilesRemote,
+        ref isMissileDisponible,
+        ref pipes, 
+        ref nmissileSpawned, 
+        numMissilesWave, 
+        minPaths, maxPaths_,
+        maxSpeedFactor,
+        numRows,numCols); 
     }
   }
 }

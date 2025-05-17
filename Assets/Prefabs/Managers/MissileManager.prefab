@@ -47,5 +47,6 @@ MonoBehaviour:
   missileStatPrefabs_:
   - {fileID: 11400000, guid: 650448c07f44c3e4aa5a01ee84437aee, type: 2}
   - {fileID: 11400000, guid: 15728b66820e474489fbab625cce93b3, type: 2}
+  - {fileID: 11400000, guid: b327505606000df43a8de4a2feec5ac2, type: 2}
   maxPaths_: 5
   maxMissiles_: 20

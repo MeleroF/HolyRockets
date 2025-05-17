@@ -13,6 +13,7 @@ public class RocketStats : ScriptableObject
   public float fallSpeed_ = -10.0f;
   public float percentageSpawn_ = 50.0f;
   public int levelStart = 0;
+  public Shadow shadow_ = null;
 
   [Header("Visuals")]
   public Sprite sprite_;

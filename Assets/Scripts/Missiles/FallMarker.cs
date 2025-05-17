@@ -16,7 +16,7 @@ public class FallMarker : MissileScript
     Camera mainCamera = Camera.main;
     float halfHeight = mainCamera.orthographicSize;
     spawnPosY = mainCamera.transform.position.y + halfHeight;
-    spawnPosY += sr_.bounds.size.y * 0.5f;
+    spawnPosY += sr_.bounds.size.y;
   }
 
   protected override void Awake()
@@ -42,6 +42,7 @@ public class FallMarker : MissileScript
   public override void Spawn(int assignedRow, Vector3 pos)
   {
     controller_.ChangeParentState(true);
+    mustFall_ = true;
     sr_.sortingLayerName = $"RocketRow{assignedRow}";
     sr_.sortingOrder = assignedRow + 1; 
     transform.position = new Vector3(pos.x, spawnPosY);

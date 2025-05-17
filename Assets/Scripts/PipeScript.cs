@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 
 public class PipeScript : MonoBehaviour
@@ -78,7 +79,7 @@ public class PipeScript : MonoBehaviour
     if (collision.gameObject.layer == rocketLayer_)
     {
       SpriteRenderer sr = collision.gameObject.GetComponent<SpriteRenderer>();
-      ParentController controller = collision.gameObject.GetComponent<ParentController>();
+      MissileScript missile = collision.gameObject.GetComponent<MissileScript>();
       if (sr.sortingLayerID != sr_.sortingLayerID) return;
 
       // Instantiate explosion.
@@ -87,7 +88,17 @@ public class PipeScript : MonoBehaviour
       AudioManager.instance_.PlaySFX(2);
 
       OnRocketCollision?.Invoke();
-      controller.ChangeParentState(false);
+      switch (missile.stats_.rocketType_)
+      {
+        case RocketType.FALLMARKER:
+          ParentController controller = collision.gameObject.GetComponent<ParentController>();
+          controller.ChangeParentState(false);
+          break;
+        case RocketType.REMOTE:
+          Shadow shadow = collision.transform.parent.GetComponent<Shadow>();
+          shadow.gameObject.SetActive(false);
+          break;
+      }
     }
   }
 

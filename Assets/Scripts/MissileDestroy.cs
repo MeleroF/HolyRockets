@@ -25,7 +25,6 @@ public class MissileDestroy : MonoBehaviour
     if (collision.gameObject.layer == rocketLayer_)
     {
       SpriteRenderer sr = collision.gameObject.GetComponent<SpriteRenderer>();
-      ParentController controller = collision.gameObject.GetComponent<ParentController>();
       MissileScript missile = collision.gameObject.GetComponent<MissileScript>();
 
       if (sr.sortingLayerID != sm_.backSortingLayerID) return;
@@ -53,8 +52,18 @@ public class MissileDestroy : MonoBehaviour
 
       // Update Score
       HUDManager.instance_.UpdateScoreValue(100);
-
-      controller.ChangeParentState(false);
+      switch(missile.stats_.rocketType_)
+      {
+        case RocketType.FALLMARKER:
+          ParentController controller = collision.gameObject.GetComponent<ParentController>();
+          controller.ChangeParentState(false);
+          break;
+        case RocketType.REMOTE:
+          Shadow shadow = collision.transform.parent.GetComponent<Shadow>();
+          shadow.gameObject.SetActive(false);
+          break;
+      }
+      
     }
   }
  

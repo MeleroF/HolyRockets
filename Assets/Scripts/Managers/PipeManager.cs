@@ -14,13 +14,12 @@ public class PipeManager : MonoBehaviour
   [SerializeField]
   private TextMeshProUGUI availablePipesText_ = null;
   [SerializeField]
-  public int numRows_ = 4 ;
-  [SerializeField]
-  public int numCols_ = 10;
-  [SerializeField]
   private float gapX_ = 0.10f;
   [SerializeField]
   private float gapY_ = 0.10f;
+
+  public int numRows_ = 4;
+  public int numCols_ = 10;
 
   private GameObject ship_;
 

@@ -63,9 +63,9 @@ public class LifeManager : MonoBehaviour
     {
       hearts_[numLifes - 1].Break(ref brokenHeart_, ref emptyHeart_, timeBroken_, degreeRotation_);
       numLifes--;
-    }else
+    }else if(numLifes == 1)
     {
-      hearts_[numLifes - 1].Break(ref brokenHeart_, ref emptyHeart_, timeBroken_, degreeRotation_);
+      hearts_[0].Break(ref brokenHeart_, ref emptyHeart_, timeBroken_, degreeRotation_);
       numLifes--;
       OnGameOver?.Invoke();
     }

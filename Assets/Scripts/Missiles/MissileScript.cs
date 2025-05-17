@@ -8,13 +8,15 @@ public abstract class MissileScript : MonoBehaviour
 
   public RocketStats stats_;
   protected float spawnPosY = 0.0f;
+  protected bool mustFall_ = false;
 
-  protected SpriteRenderer sr_;
+  [NonSerialized]
+  public SpriteRenderer sr_;
 
   // Start is called before the first frame update
   protected abstract void Awake();
 
-  public void Init(ref Sprite sprite)
+  public virtual void Init(ref Sprite sprite)
   {
     sr_.sprite = sprite;
   }
@@ -27,9 +29,10 @@ public abstract class MissileScript : MonoBehaviour
     transform.position = new Vector3(transform.position.x, transform.position.y + Time.deltaTime * stats_.fallSpeed_, transform.position.z);
   }
 
-  private void Update()
+  protected virtual void Update()
   {
-    LetFallMissile();
+    if(mustFall_)
+      LetFallMissile();
   }
 
  
