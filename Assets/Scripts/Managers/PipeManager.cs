@@ -13,7 +13,7 @@ public class PipeManager : MonoBehaviour
   [SerializeField]
   private PipeScript pipePrefab_ = null;
   [SerializeField]
-  private TextMeshProUGUI availablePipesText_ = null;
+  private TextMeshPro availablePipesText_ = null;
   [SerializeField]
   private float gapX_ = 0.10f;
   [SerializeField]
@@ -124,7 +124,7 @@ public class PipeManager : MonoBehaviour
     }
     else
     {
-      availablePipesText_.color = new Color(0.3f, 0.3f, 0.3f, 1.0f);
+      availablePipesText_.color = new Color(0.05f, 0.05f, 0.05f, 1.0f);
     }
   }
 
