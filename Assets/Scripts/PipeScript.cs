@@ -22,6 +22,11 @@ public class PipeScript : MonoBehaviour
 
   private float timeOpen_ = 0.8f;
 
+  [NonSerialized]
+  public int counterTargeted = 0;
+  [NonSerialized]
+  public char key_ = '0';
+
   public bool OpenPipe(ref int openedPipes, int missilesPerWave)
   {
     if(!isLidOpen_)
@@ -86,6 +91,9 @@ public class PipeScript : MonoBehaviour
       GameObject prefab = Resources.Load<GameObject>("Explosion");
       GameObject instance = Instantiate(prefab, collision.transform.position, Quaternion.identity);
       AudioManager.instance_.PlaySFX(2);
+
+      if(counterTargeted > 0)
+        counterTargeted--;
 
       OnRocketCollision?.Invoke();
       switch (missile.stats_.rocketType_)

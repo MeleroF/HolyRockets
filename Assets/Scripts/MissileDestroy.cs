@@ -29,8 +29,6 @@ public class MissileDestroy : MonoBehaviour
 
       if (sr.sortingLayerID != sm_.backSortingLayerID) return;
 
-      OnMissileCatch?.Invoke();
-
       if(missile.stats_.rocketSpeciality_ == RocketSpeciality.HEAL)
       {
         OnHealMissileCatch?.Invoke();
@@ -41,6 +39,9 @@ public class MissileDestroy : MonoBehaviour
         AudioManager.instance_.PlaySFX(3);
       }
 
+      if(missile.target_.counterTargeted > 0)
+        missile.target_.counterTargeted--;
+
       // Instantiate score obtained prefab.
       GameObject prefab = Resources.Load<GameObject>("ScoreObtained");
       Canvas canvas = FindObjectOfType<Canvas>();
@@ -48,10 +49,10 @@ public class MissileDestroy : MonoBehaviour
       screenPos.y += 150.0f;
       GameObject instance = Instantiate(prefab, canvas.transform);
       instance.GetComponent<RectTransform>().position = screenPos;
-      instance.GetComponent<ScoreObtainedScript>().SetScoreText(100);
+      instance.GetComponent<ScoreObtainedScript>().SetScoreText(missile.stats_.score_);
 
       // Update Score
-      HUDManager.instance_.UpdateScoreValue(100);
+      HUDManager.instance_.UpdateScoreValue(missile.stats_.score_);
       switch(missile.stats_.rocketType_)
       {
         case RocketType.FALLMARKER:
@@ -63,7 +64,8 @@ public class MissileDestroy : MonoBehaviour
           shadow.gameObject.SetActive(false);
           break;
       }
-      
+      OnMissileCatch?.Invoke();
+
     }
   }
  

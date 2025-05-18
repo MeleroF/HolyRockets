@@ -145,7 +145,7 @@ public class MissileManager : MonoBehaviour
       {
         case RocketType.FALLMARKER:
           FallMarker fallMarker = (FallMarker)missileCalifier.missiles_[i];
-          if(!fallMarker.controller_.isEnabled_)
+          if(!fallMarker.crosshair_.gameObject.activeSelf)
           {
             int numPaths = UnityEngine.Random.Range(minPaths, maxPaths);
             float speedFactor = UnityEngine.Random.Range(1.0f, maxSpeedFactor);

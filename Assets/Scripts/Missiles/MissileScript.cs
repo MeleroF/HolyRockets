@@ -13,6 +13,9 @@ public abstract class MissileScript : MonoBehaviour
   [NonSerialized]
   public SpriteRenderer sr_;
 
+  [NonSerialized]
+  public PipeScript target_ = null;
+
   // Start is called before the first frame update
   protected abstract void Awake();
 

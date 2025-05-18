@@ -24,7 +24,7 @@ public class CrosshairScript : MonoBehaviour
 
   private SpriteRenderer sr_;
   private bool isSearching_ = false;
-  private MissileScript parentReference_ = null;
+  private FallMarker parentReference_ = null;
 
   [NonSerialized]
   private List<PipeScript> pipes_ = null;
@@ -43,7 +43,7 @@ public class CrosshairScript : MonoBehaviour
     gameObject.SetActive(false);
     sr_ = GetComponent<SpriteRenderer>();
     GameObject parent = gameObject.transform.parent.gameObject;
-    parentReference_ = parent.GetComponent<MissileScript>();
+    parentReference_ = parent.GetComponent<FallMarker>();
   }
 
   public void StartSearching(ref List<PipeScript> pipes, int numPaths, float speedFactor)
@@ -87,6 +87,8 @@ public class CrosshairScript : MonoBehaviour
       pathCount_++;
       if (pathCount_ >= numPaths_)
       {
+        parentReference_.target_ = followTr_.gameObject.GetComponent<PipeScript>();
+        parentReference_.target_.counterTargeted++;
         isSearching_ = false;
         StartCoroutine(Blink());
         StartCoroutine(CountForLaunchMissile());

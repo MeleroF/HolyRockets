@@ -176,3 +176,4 @@ MonoBehaviour:
   gravity: {x: 0, y: -2, z: 0}
   originalAspect_: {fileID: -2119176890, guid: ef0f6ef6dc7009f40b260322eccf3dae, type: 3}
   blinkAspect_: {fileID: 1894609733, guid: ef0f6ef6dc7009f40b260322eccf3dae, type: 3}
+  blinkTime_: 1.5

@@ -18,6 +18,7 @@ MonoBehaviour:
   fallSpeed_: -10
   percentageSpawn_: 50
   levelStart: 3
+  score_: 150
   shadow_: {fileID: 7627863120482688906, guid: a013c70d35d5c0945bbc269d60fbf5c4, type: 3}
   sprite_: {fileID: -2119176890, guid: ef0f6ef6dc7009f40b260322eccf3dae, type: 3}
   crossHairSprites_: []

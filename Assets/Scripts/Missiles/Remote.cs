@@ -52,7 +52,7 @@ public class Remote : MissileScript
   {
     targetRotation_ = Quaternion.Euler(0f, 0f, 90f);
     sr_.sortingLayerName = $"RocketRow{assignedRow + 1}";
-    sr_.sortingOrder = assignedRow + 1;
+    sr_.sortingOrder = assignedRow + 2;
     currentBlinkLapse_ = blinkLapse_;
     alpha_ = 0.0f;
     isFalling_ = false;
@@ -69,7 +69,7 @@ public class Remote : MissileScript
     shadow_.maskGettingCloser_ = true;
     shadow_.initShadowMaskLeftPos = shadow_.shadhowMaskLeftTr_.position;
     shadow_.initShadowMaskRightPos = shadow_.shadhowMaskRightTr_.position;
-    fallRotation_ = sr_.flipX ? Quaternion.Euler(0.0f, 0.0f, -90.0f) : targetRotation_;
+    fallRotation_ = transform.localScale.x < 0 ? Quaternion.Euler(0.0f, 0.0f, -90.0f) : targetRotation_;
   }
 
   public void IsTimeToFall()

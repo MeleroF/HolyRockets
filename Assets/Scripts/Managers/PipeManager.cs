@@ -7,6 +7,7 @@ using TMPro;
 
 public class PipeManager : MonoBehaviour
 {
+  [NonSerialized]
   public int openedPipes_ = 0;
 
   [SerializeField]
@@ -46,6 +47,8 @@ public class PipeManager : MonoBehaviour
 
     float offsetRow = 0.0f;
 
+    int pipeCounter = 0;
+
     for (int y = 0; y < numRows_; ++y)
     {
       SpriteRenderer customRendererRow = pipePrefab_.GetComponent<SpriteRenderer>();
@@ -65,6 +68,7 @@ public class PipeManager : MonoBehaviour
         spriteMaskPipe.frontSortingLayerID = SortingLayer.NameToID($"RocketRow{y + 2}");
         spriteMaskPipe.backSortingLayerID = SortingLayer.NameToID($"RocketRow{y + 1}");
 
+        tmpPipe.key_ = keyMapping[pipeCounter++];
 
         spriteMaskPipe.sortingOrder = 1 + y;
         srTmpPipe.sortingOrder = 1 + y;
@@ -103,7 +107,7 @@ public class PipeManager : MonoBehaviour
   {
     for (int i = 0; i < pipes_.Count; i++)
     {
-      if (pipes_[i].isLidOpen_)
+      if (pipes_[i].isLidOpen_ && pipes_[i].counterTargeted == 0)
       {
         pipes_[i].ClosePipe(ref openedPipes_);
         UpdatePipesOpenedHUD(missilesPerWave);

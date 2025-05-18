@@ -5,9 +5,12 @@ using UnityEngine.UI;
 using static UpcomingRocketManager;
 using static MissileDestroy;
 using static PipeScript;
+using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
+  [SerializeField]
+  private TextKeyContainer keyTextContainer_;
   [SerializeField]
   private Canvas canvas_;
   [SerializeField]
@@ -34,6 +37,8 @@ public class GameManager : MonoBehaviour
   private int currentLevel_ = 0;
   private int minPathsCrosshair = 0;
 
+  private KeywordVisualizer keyVisualizer_ = null;
+
   private float maxSpeedFactor_ = 1.0f;
 
   // Start is called before the first frame update
@@ -43,6 +48,8 @@ public class GameManager : MonoBehaviour
     missileManager_?.Init();
     upcomingRocketManager_?.Init(ref upcomingRocketSpawnPoint_, missileManager_.realMaxMissiles_);
     lifeManager_?.Init(ref canvas_);
+    keyVisualizer_ = canvas_.gameObject.GetComponent<KeywordVisualizer>();
+    keyVisualizer_.Init(ref pipeManager_.pipes_, ref canvas_, ref keyTextContainer_);
 
     UpdateSettingsForLevel();
     SummonRocketsInLevel();

@@ -79,7 +79,7 @@ public class Shadow : MonoBehaviour
 
   private void AproachMasks()
   {
-    float maxAproach = 0.50f;
+    float maxAproach = 0.35f;
     alpha_ += Time.deltaTime * speedAproach_ ;
     alpha_ = Mathf.Clamp(alpha_, 0.0f, maxAproach);
     shadhowMaskLeftTr_.position = Vector3.Lerp(initShadowMaskLeftPos, transform.position, alpha_);
@@ -117,7 +117,7 @@ public class Shadow : MonoBehaviour
       pathCounter_++;
       if(pathCounter_ <= targetPaths_)
       {
-        remote_.sr_.flipX = !remote_.sr_.flipX;
+        remote_.transform.localScale = new Vector3(remote_.transform.localScale.x * (-1.0f), remote_.transform.localScale.y);
       }
       if (pathCounter_ == targetPaths_)
         GenereateFinalTarget();
@@ -128,6 +128,8 @@ public class Shadow : MonoBehaviour
   {
     int randCol = UnityEngine.Random.Range(0, numColsPipes_);
     targetTr_ = pipes_[selectedRow_ * numColsPipes_ + randCol].transform;
+    pipes_[selectedRow_ * numColsPipes_ + randCol].counterTargeted++;
+    remote_.target_ = pipes_[selectedRow_ * numColsPipes_ + randCol];
   }
   private void Stroll()
   {
@@ -157,7 +159,10 @@ public class Shadow : MonoBehaviour
     gameObject.SetActive(true);
 
     remote_.Spawn(selectedRow, Vector3.one);
-    remote_.sr_.flipX = false;
+    if(remote_.transform.localScale.x < 0)
+    {
+      remote_.transform.localScale = new Vector3(remote_.transform.localScale.x * (-1.0f), remote_.transform.localScale.y);
+    }
 
     strollCompleted_ = false;
 
@@ -170,7 +175,7 @@ public class Shadow : MonoBehaviour
     targetTr_ = spawnLeft ? rightTr_ : leftTr_;
     if(targetTr_ == rightTr_)
     {
-      remote_.sr_.flipX = true;
+      remote_.transform.localScale = new Vector3(remote_.transform.localScale.x * (-1.0f), remote_.transform.localScale.y);
     }
   }
 }
